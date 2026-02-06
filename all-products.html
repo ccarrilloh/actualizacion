@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html data-theme="dark" lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Glitched Box — Starter</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="gb-core.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Header / Navigation -->
+  <header class="header">
+    <div class="layout__container">
+      <div class="header-content">
+
+        <!-- Logo -->
+        <div class="logo">
+          <a aria-label="Glitched Box (inicio)" href="index.html">
+            <img
+              alt="Glitched Box"
+              class="header-logo-img"
+              data-logo-dark="images/logo_glitchedbox_horizontal.svg"
+              data-logo-light="images/logo_glitchedbox_horizontal_black.svg"
+              decoding="async"
+              id="headerLogo"
+              loading="eager"
+              src="images/logo_glitchedbox_horizontal.svg"
+            />
+          </a>
+        </div>
+
+        <!-- Search Bar (desktop/tablet) -->
+        <div class="header-search">
+          <div class="search-container">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24 search-icon">
+              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                <path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </span>
+            <input aria-label="Buscar productos" class="search-input" placeholder="Buscar productos..." type="text"/>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="header-actions">
+
+          <!-- Search (mobile) -->
+          <button aria-label="Abrir búsqueda" class="icon-button search-toggle" id="searchToggle" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                <path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+              </svg>
+            </span>
+            <span>Buscar</span>
+          </button>
+
+          <button aria-label="Iniciar sesión" class="icon-button" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.66667 12.5 0 14.175 0 17.5V20H20V17.5C20 14.175 13.3333 12.5 10 12.5Z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span>Iniciar sesión</span>
+          </button>
+
+          <button aria-label="Favoritos" class="icon-button" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 18.35L8.55 17.03C3.4 12.36 0 9.27 0 5.5C0 2.41 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.08C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.41 20 5.5C20 9.27 16.6 12.36 11.45 17.03L10 18.35Z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span>Favoritos</span>
+          </button>
+
+          <button aria-label="Carrito" class="icon-button cart-button" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 16C4.9 16 4.01 16.9 4.01 18C4.01 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 14.1 4.9 15 6 15H18V13H6.42C6.28 13 6.17 12.89 6.17 12.75L6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.48C19.96 3.34 20 3.17 20 3C20 2.45 19.55 2 19 2H4.21L3.27 0H0ZM16 16C14.9 16 14.01 16.9 14.01 18C14.01 19.1 14.9 20 16 20C17.1 20 18 19.1 18 18C18 16.9 17.1 16 16 16Z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span>Carrito</span>
+            <span class="cart-badge" id="cartBadge">0</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs-bar">
+    <div class="layout__container breadcrumbs-bar__inner">
+      <nav aria-label="Breadcrumb" class="breadcrumbs">
+        <a class="breadcrumb-link" href="index.html">Inicio</a>
+        <span class="breadcrumb-sep">›</span>
+        <a class="breadcrumb-link" href="#">Colecciones</a>
+        <span class="breadcrumb-sep">›</span>
+        <span class="breadcrumb-current" aria-current="page">Gallinitas</span>
+      </nav>
+
+      <!-- Theme Switch -->
+<label class="theme-switch" aria-label="Cambiar tema">
+  <input id="themeToggle" type="checkbox" class="theme-switch__checkbox" data-theme-toggle>
+  <div class="theme-switch__container" aria-hidden="true">
+    <div class="theme-switch__clouds"></div>
+    <div class="theme-switch__stars-container">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none" aria-hidden="true">
+  <path fill-rule="evenodd" clip-rule="evenodd"
+    d="M135.8 3c-.8.9-1.7 1.3-2.8 1.4 1.1.1 2 .5 2.8 1.4.8.9 1.2 1.9 1.2 3.1 0-.8.2-1.5.5-2.1.4-.7.9-1.2 1.5-1.6.6-.4 1.3-.6 2.1-.6-1.1-.1-2.1-.5-2.9-1.4C137.4 2.2 137 1.2 137 0c0 1.2-.4 2.2-1.2 3ZM31 23.4c1.1-.1 2-.5 2.8-1.4.8-.9 1.2-1.8 1.2-3 0 1.2.4 2.1 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1.9-1.5 1.6-.4.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3.1-.8-.9-1.7-1.3-2.8-1.4Z"
+    fill="currentColor"/>
+</svg>
+    </div>
+    <div class="theme-switch__circle-container">
+      <div class="theme-switch__sun-moon-container">
+        <div class="theme-switch__moon">
+          <div class="theme-switch__spot"></div>
+          <div class="theme-switch__spot"></div>
+          <div class="theme-switch__spot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</label>
+    </div>
+  </div>
+
+  <!-- Search Overlay (mobile) -->
+  <div aria-hidden="true" class="search-overlay" id="searchOverlay">
+    <div class="search-overlay__backdrop" data-search-close=""></div>
+
+    <div aria-label="Buscar productos" aria-modal="true" class="search-overlay__panel" role="dialog">
+      <div class="search-overlay__header">
+        <strong class="search-overlay__title">Buscar</strong>
+
+        <button aria-label="Cerrar búsqueda" class="icon-button search-overlay__close" data-search-close="" type="button">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--20">
+            <svg aria-hidden="true" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4L16 16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+              <path d="M16 4L4 16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="search-container">
+        <span aria-hidden="true" class="icon-wrap icon-wrap--24 search-icon">
+          <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+            <path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+          </svg>
+        </span>
+        <input aria-label="Buscar productos" class="search-input" id="searchInputMobile" placeholder="Buscar productos..." type="text"/>
+      </div>
+    </div>
+  </div>
+
+  <main class="layout__container l-section l-stack">
+    <div class="l-stack">
+      <h1 class="type__h1">UI Playground</h1>
+      <p class="type__body type__muted">Aquí probamos tokens y componentes antes de construir páginas.</p>
+    </div>
+
+    <section aria-label="Cards" class="l-stack">
+      <h2 class="type__h2">Cards</h2>
+      <div class="grid grid--products">
+        <article class="card card--product">
+          <h3 class="type__h3">Product Card</h3>
+          <p class="type__body type__muted">Card estándar para listados (1 fila en mobile).</p>
+        </article>
+
+        <article class="card card--featured">
+          <h3 class="type__h3">Featured Card</h3>
+          <p class="type__body type__muted">Variante para destacados / promos.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+
+    <!-- Newsletter (centrado tipo container) -->
+    <section class="newsletter">
+      <div class="footer-container">
+        <div class="newsletter-content">
+          <div class="newsletter-left">
+            <h2 class="newsletter-title">Suscríbete a nuestro boletín</h2>
+            <p class="newsletter-description">
+              Entérate antes que nadie de nuestras novedades, promos exclusivas y todo lo que está por venir.
+            </p>
+          </div>
+
+          <form class="newsletter-form" id="newsletterForm" novalidate>
+            <input
+              type="email"
+              class="newsletter-input"
+              id="newsletterEmail"
+              name="email"
+              placeholder="Escribe tu correo electrónico"
+              autocomplete="email"
+              inputmode="email"
+              required
+              aria-describedby="newsletterHelp"
+            >
+            <button type="submit" class="newsletter-button">Suscribirse</button>
+            <p class="newsletter-help" id="newsletterHelp" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Separador FULL WIDTH -->
+    <div class="footer-separator"></div>
+
+    <!-- Footer Content FULL WIDTH -->
+    <div class="footer-content footer-content--full">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <img
+            src="images/logo_glitchedbox_horizontal.svg"
+            alt="Glitched Box"
+            loading="lazy"
+            decoding="async"
+            class="footer-logo-img footer-logo--dark"
+          >
+          <img
+            src="images/logo_glitchedbox_horizontal_black.svg"
+            alt="Glitched Box"
+            loading="lazy"
+            decoding="async"
+            class="footer-logo-img footer-logo--light"
+          >
+        </div>
+
+        <p class="footer-description">
+          Glitched Box es una marca mexicana de art toys inspirada en ilustraciones originales. Cada figura representa un personaje que llegó a nuestro mundo por error a través de un "glitch". El estilo mezcla lo kawaii con lo oscuro, creando una estética única y coleccionable.
+        </p>
+
+        <div class="footer-social">
+          <a href="https://www.facebook.com/p/Glitched-Box-100071087033149/" class="social-link" aria-label="Facebook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047v-2.66c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.971h-1.513c-1.491 0-1.956.93-1.956 1.886v2.265h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/>
+            </svg>
+          </a>
+
+          <a href="https://www.instagram.com/glitchedbox/" class="social-link" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-heading">Quiénes somos</h3>
+        <ul class="footer-links">
+          <li><a href="#">Nuestra historia</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-heading">Ayuda</h3>
+        <ul class="footer-links">
+          <li><a href="#">Seguimiento de pedido</a></li>
+          <li><a href="#">Envíos y devoluciones</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-heading">Legal</h3>
+        <ul class="footer-links">
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#">Política de envío</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h3 class="footer-heading">Contacto</h3>
+        <button class="contact-button">Contáctanos</button>
+      </div>
+    </div>
+
+    <!-- Footer bottom FULL WIDTH -->
+    <div class="footer-bottom">
+      <p>© 2019 - 2025 Glitched Box. Todos los derechos reservados. Información exclusiva de Glitched Box</p>
+    </div>
+
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+    <span class="icon-wrap icon-wrap--24" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M12 4L4 12L5.41 13.41L11 7.83V20H13V7.83L18.59 13.41L20 12L12 4Z" fill="currentColor"/>
+      </svg>
+    </span>
+  </button>
+<script src="gb-core.js"></script>
+</body>
+</html>
