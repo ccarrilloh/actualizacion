@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html data-theme="dark" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Glitched Box — Starter</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="styles.css" rel="stylesheet"/>
+</head>
+<body>
+<!-- Header / Navigation -->
+<header class="header">
+<div class="layout__container">
+<div class="header-content">
+<!-- Logo -->
+<div class="logo">
+<a aria-label="Glitched Box (inicio)" href="index.html">
+<img alt="Glitched Box" class="header-logo-img" data-logo-dark="images/logo_glitchedbox_horizontal.svg" data-logo-light="images/logo_glitchedbox_horizontal_black.svg" decoding="async" id="headerLogo" loading="eager" src="images/logo_glitchedbox_horizontal.svg"/>
+</a>
+</div>
+<!-- Search Bar (desktop/tablet) -->
+<div class="header-search">
+<div class="search-container">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24 search-icon"><svg aria-hidden="true" class="" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg></span>
+<input aria-label="Buscar productos" class="search-input" placeholder="Buscar productos..." type="text"/>
+</div>
+</div>
+<!-- Actions -->
+<div class="header-actions">
+<!-- Search (mobile) -->
+<button aria-label="Abrir búsqueda" class="icon-button search-toggle" id="searchToggle" type="button">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24">
+<svg aria-hidden="true" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+<span>Buscar</span>
+</button>
+<button aria-label="Iniciar sesión" class="icon-button" type="button">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24">
+<svg aria-hidden="true" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.66667 12.5 0 14.175 0 17.5V20H20V17.5C20 14.175 13.3333 12.5 10 12.5Z" fill="currentColor"></path>
+</svg>
+</span>
+<span>Iniciar sesión</span>
+</button>
+<button aria-label="Favoritos" class="icon-button" type="button">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24">
+<svg aria-hidden="true" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 18.35L8.55 17.03C3.4 12.36 0 9.27 0 5.5C0 2.41 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.08C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.41 20 5.5C20 9.27 16.6 12.36 11.45 17.03L10 18.35Z" fill="currentColor"></path>
+</svg>
+</span>
+<span>Favoritos</span>
+</button>
+<button aria-label="Carrito" class="icon-button cart-button" type="button">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24">
+<svg aria-hidden="true" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 16C4.9 16 4.01 16.9 4.01 18C4.01 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 14.1 4.9 15 6 15H18V13H6.42C6.28 13 6.17 12.89 6.17 12.75L6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.48C19.96 3.34 20 3.17 20 3C20 2.45 19.55 2 19 2H4.21L3.27 0H0ZM16 16C14.9 16 14.01 16.9 14.01 18C14.01 19.1 14.9 20 16 20C17.1 20 18 19.1 18 18C18 16.9 17.1 16 16 16Z" fill="currentColor"></path>
+</svg>
+</span>
+<span>Carrito</span>
+<span class="cart-badge" id="cartBadge">0</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs-bar">
+<div class="layout__container breadcrumbs-bar__inner">
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+<a class="breadcrumb-link" href="index.html">Inicio</a>
+<span class="breadcrumb-sep">›</span>
+<a class="breadcrumb-link" href="#">Colecciones</a>
+<span class="breadcrumb-sep">›</span>
+<span class="breadcrumb-current">Gallinitas</span>
+</nav>
+<!-- Theme Switch (sol ↔ luna) -->
+<button aria-checked="true" aria-label="Cambiar tema" class="theme-switch" id="themeToggle" role="switch" title="Cambiar tema" type="button">
+<span aria-hidden="true" class="theme-switch__check">
+<span aria-hidden="true" class="theme-switch__icon-wrap">
+<span aria-hidden="true" class="theme-switch__icon theme-switch__icon--sun">
+<svg aria-hidden="true" fill="none" viewbox="0 0 24 24">
+<circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"></circle>
+<path d="M12 2v2" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M12 20v2" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M4.93 4.93l1.41 1.41" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M17.66 17.66l1.41 1.41" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M2 12h2" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M20 12h2" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M4.93 19.07l1.41-1.41" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+<path d="M17.66 6.34l1.41-1.41" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path>
+</svg>
+</span>
+<span aria-hidden="true" class="theme-switch__icon theme-switch__icon--moon">
+<svg aria-hidden="true" fill="none" viewbox="0 0 24 24">
+<path d="M21 12.8A8.5 8.5 0 0 1 11.2 3a6.8 6.8 0 1 0 9.8 9.8Z" stroke="currentColor" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</span>
+</span>
+<span aria-hidden="true" class="theme-switch__thumb"></span>
+</span>
+</button>
+</div>
+</div>
+<!-- Search Overlay (mobile) -->
+<div aria-hidden="true" class="search-overlay" id="searchOverlay">
+<div class="search-overlay__backdrop" data-search-close=""></div>
+<div aria-label="Buscar productos" aria-modal="true" class="search-overlay__panel" role="dialog">
+<div class="search-overlay__header">
+<strong class="search-overlay__title">Buscar</strong>
+<button aria-label="Cerrar búsqueda" class="icon-button search-overlay__close" data-search-close="" type="button"><span aria-hidden="true" class="icon-wrap icon-wrap--20"><svg aria-hidden="true" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 4L16 16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path><path d="M16 4L4 16" stroke="currentColor" stroke-linecap="round" stroke-width="2"></path></svg></span></button>
+</div>
+<div class="search-container">
+<span aria-hidden="true" class="icon-wrap icon-wrap--24 search-icon"><svg aria-hidden="true" class="" fill="none" height="20" viewbox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 17C13.4183 17 17 13.4183 17 9C17 4.58172 13.4183 1 9 1C4.58172 1 1 4.58172 1 9C1 13.4183 4.58172 17 9 17Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<path d="M19 19L14.65 14.65" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg></span>
+<input aria-label="Buscar productos" class="search-input" id="searchInputMobile" placeholder="Buscar productos..." type="text"/>
+</div>
+</div>
+</div>
+<main class="layout__container l-section l-stack">
+<div class="l-stack">
+<h1 class="type__h1">UI Playground</h1>
+<p class="type__body type__muted">
+        Aquí probamos tokens y componentes antes de construir páginas.
+      </p>
+</div>
+<section aria-label="Cards" class="l-stack">
+<h2 class="type__h2">Cards</h2>
+<div class="grid grid--products">
+<article class="card card--product">
+<h3 class="type__h3">Product Card</h3>
+<p class="type__body type__muted">Card estándar para listados (1 fila en mobile).</p>
+</article>
+<article class="card card--featured">
+<h3 class="type__h3">Featured Card</h3>
+<p class="type__body type__muted">Variante para destacados / promos.</p>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+      <div class="newsletter-content">
+
+        <div class="newsletter-left">
+          <h2 class="newsletter-title">Suscríbete a nuestro boletín</h2>
+          <p class="newsletter-description">
+            Entérate antes que nadie de nuestras novedades, promos exclusivas y todo lo que está por venir.
+          </p>
+        </div>
+
+        <form class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="Escribe tu correo electrónico" required>
+          <button type="submit" class="newsletter-button">Suscribirse</button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- SEPARADOR FULL WIDTH -->
+    <div class="footer-separator"></div>
+
+    <!-- ... tu footer-content igual ... -->
+
+  </div>
+</footer>
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+  <span class="icon-wrap icon-wrap--24" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M12 4L4 12L5.41 13.41L11 7.83V20H13V7.83L18.59 13.41L20 12L12 4Z" fill="currentColor"/>
+    </svg>
+  </span>
+</button>
+
+<script src="app.js"></script>
+</body>
+</html>
