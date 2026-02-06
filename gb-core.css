@@ -570,6 +570,10 @@ a:hover {
               0 0 18px color-mix(in srgb, var(--color-accent) 12%, transparent);
 }
 
+.search-input:focus::placeholder {
+  color: var(--color-input-focus);
+}
+
 .search-container:focus-within .search-icon {
   color: var(--color-input-focus);
 }
@@ -580,8 +584,12 @@ a:hover {
   box-shadow: 0 0 0 1px var(--accent-purple-glow);
 }
 
+.search-container:hover .search-input::placeholder{
+  color: #ffffff;
+}
+
 .search-container:hover .search-icon{
-  color: var(--color-input-focus);
+  color: #ffffff;
 }
 
 /* Header actions */
@@ -602,10 +610,40 @@ a:hover {
 .header-actions a:hover,
 .header-actions button:hover,
 .header-actions .icon-button:hover,
+.header-actions .icon-button:hover span,
 .header-actions a:focus-visible,
 .header-actions button:focus-visible,
 .header-actions .icon-button:focus-visible {
-  color: var(--color-text);
+  color: #ffffff;
+}
+
+.header-actions .icon-button:active,
+.header-actions .icon-button:active span {
+  color: var(--color-input-focus);
+}
+
+/* Focus: ícono y texto púrpura */
+.header-actions .icon-button:focus,
+.header-actions .icon-button:focus span,
+.header-actions .icon-button:focus .icon-wrap,
+.header-actions .icon-button:focus svg {
+  color: var(--color-input-focus);
+}
+
+/* Asegurar que iconos también se pongan blancos en hover */
+.header-actions .icon-button:hover .icon-wrap,
+.header-actions .icon-button:hover svg {
+  color: #ffffff;
+}
+
+/* Asegurar que el texto también se ponga blanco en hover */
+.header-actions .icon-button:hover span:not(.icon-wrap) {
+  color: #ffffff;
+}
+
+.header-actions .icon-button:active,
+.header-actions .icon-button:active span {
+  color: #ffffff;
 }
 
 .header-actions .icon-button svg {
@@ -695,9 +733,15 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: var(--size-5);
-  padding-block: 12px;
+  padding-block: 8px;
   padding-inline: 0;
   min-height: var(--breadcrumbs-h);
+}
+
+@media (min-width: 64rem) {
+  .breadcrumbs-bar__inner {
+    padding-block: 12px;
+  }
 }
 
 .breadcrumbs {
@@ -732,10 +776,23 @@ a:hover {
 .breadcrumb-link {
   color: var(--color-text-secondary);
   text-decoration: none;
-  transition: color var(--dur-1) var(--ease-out);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+  border-radius: var(--radius-1);
+  outline: none;
+  border: 1px solid transparent;
+  padding: 2px 6px;
 }
 
 .breadcrumb-link:hover {
+  color: var(--color-input-focus);
+}
+
+.breadcrumb-link:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
   color: var(--color-input-focus);
 }
 
@@ -1079,11 +1136,28 @@ body.is-locked {
 
 .newsletter-input::placeholder {
   color: var(--color-input-placeholder);
+  transition: color var(--dur-1) var(--ease-out);
+}
+
+.newsletter-input:hover {
+  border-color: var(--accent-purple-border);
+  background: color-mix(in srgb, var(--accent-purple-soft) 70%, rgba(255, 255, 255, 0.03));
+  box-shadow: 0 0 0 1px var(--accent-purple-glow);
+}
+
+.newsletter-input:hover::placeholder {
+  color: #ffffff;
 }
 
 .newsletter-input:focus {
-  border-color: var(--color-accent-border);
-  box-shadow: var(--focus-ring);
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+.newsletter-input:focus::placeholder {
+  color: var(--color-input-focus);
 }
 
 :root[data-theme="light"] .newsletter-input {
@@ -1176,6 +1250,7 @@ body.is-locked {
 
 .newsletter-button:focus-visible{
   outline: none;
+  border-color: var(--color-accent);
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
     0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
@@ -1341,11 +1416,28 @@ body.is-locked {
 .footer-links a {
   color: var(--color-text-muted);
   text-decoration: none;
-  transition: color var(--dur-1) var(--ease-out);
+  transition: color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+  border-radius: var(--radius-1);
+  outline: none;
+  border: 1px solid transparent;
+  padding: 2px 6px;
 }
 
 .footer-links a:hover {
   color: var(--color-text);
+}
+
+.footer-links a:active {
+  color: var(--color-input-focus);
+}
+
+.footer-links a:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
+  color: var(--color-input-focus);
 }
 
 .contact-button {
@@ -1357,12 +1449,24 @@ body.is-locked {
   color: var(--color-text);
   font-weight: 800;
   cursor: pointer;
-  transition: background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
 }
 
 .contact-button:hover {
   background: var(--color-surface-2);
   transform: translateY(-1px);
+}
+
+.contact-button:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 :root[data-theme="light"] .contact-button {
