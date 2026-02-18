@@ -722,5 +722,1416 @@
 
 <script src="gb-core.js"></script>
 <script src="home.js" defer></script>
+<!-- =================================================
+     GLITCHEDBOX CHATBOT WIDGET — v3 final
+     Pega todo antes del </body>.
+     Cambia src de la imagen en DOS lugares:
+     1. FAB lateral: id='gb-fab-img'
+     2. Header chat: id='gb-header-char'
+     Ambos usan: assets/img/glitch-bot.webp
+================================================= -->
+
+<style>
+/* ══════════════════════════════════════
+/* ══════════════════════════════════════
+   VARIABLES — Estética claude.ai + GlitchedBox
+══════════════════════════════════════ */
+:root {
+  --gb-bg:           #050505;
+  --gb-surface:      #0c0c0c;
+  --gb-surface2:     #111111;
+  --gb-border:       rgba(255,255,255,.08);
+  --gb-text:         #ede8df;
+  --gb-text-dim:     #484440;
+  --gb-text-mid:     #807870;
+  --gb-accent:       #c8f000;
+  --gb-accent-dark:  #a0c000;
+  --gb-accent-rgb:   200, 240, 0;
+  --gb-accent2:      #ff5c6a;
+  --gb-accent2-rgb:  255, 92, 106;
+  --gb-bubble-user:  rgba(200,240,0,.08);
+  --gb-bubble-user-border: rgba(200,240,0,.15);
+  --gb-shadow:       0 0 0 1px rgba(255,255,255,.05),
+                     0 4px 24px rgba(0,0,0,.5),
+                     0 24px 64px rgba(0,0,0,.7),
+                     0 0 80px rgba(200,240,0,.03);
+  --gb-glow:         0 0 12px rgba(200,240,0,.3);
+  --gb-glow2:        0 0 12px rgba(255,92,106,.3);
+  --gb-radius:       16px;
+}
+
+.gb-light,
+[data-theme="light"] #gb-widget,
+.light #gb-widget,
+.light-theme #gb-widget {
+  --gb-bg:           #f8f6f2;
+  --gb-surface:      #ffffff;
+  --gb-surface2:     #f2efe9;
+  --gb-border:       rgba(0,0,0,.07);
+  --gb-text:         #1a1714;
+  --gb-text-dim:     #c0b8b0;
+  --gb-text-mid:     #807870;
+  --gb-accent:       #5a8500;
+  --gb-accent-dark:  #3d6000;
+  --gb-accent-rgb:   90, 133, 0;
+  --gb-accent2:      #d93040;
+  --gb-accent2-rgb:  217, 48, 64;
+  --gb-bubble-user:  rgba(90,133,0,.07);
+  --gb-bubble-user-border: rgba(90,133,0,.14);
+  --gb-shadow:       0 0 0 1px rgba(0,0,0,.05),
+                     0 4px 24px rgba(0,0,0,.06),
+                     0 24px 64px rgba(0,0,0,.1);
+  --gb-glow:         0 0 12px rgba(90,133,0,.2);
+}
+
+   RESET & BASE
+══════════════════════════════════════ */
+#gb-widget *,
+#gb-widget *::before,
+#gb-widget *::after {
+  box-sizing: border-box;
+  margin: 0; padding: 0;
+}
+
+/* ══════════════════════════════════════
+   FAB — Botón lateral estilo Telcel
+   Pegado a la derecha, a media pantalla.
+   Al hover se expande mostrando texto.
+══════════════════════════════════════ */
+
+/* Contenedor externo — fijo en pantalla */
+#gb-fab-wrap {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-60%);
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  /* Transición de entrada/salida */
+  transition: opacity .25s cubic-bezier(.16,1,.3,1),
+              transform .3s cubic-bezier(.16,1,.3,1);
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Cuando el chat está abierto — el botón desaparece */
+#gb-fab-wrap.hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-60%) translateX(80px); /* se va hacia la derecha */
+}
+
+/* Pill expandible */
+#gb-fab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--gb-accent);
+  border: none;
+  border-radius: 12px 0 0 12px; /* esquinas izquierda redondeadas, derecha pegada al borde */
+  cursor: pointer;
+  padding: 10px 10px;
+  box-shadow: -4px 0 20px rgba(var(--gb-accent-rgb), .35), -2px 0 40px rgba(0,0,0,.4);
+  overflow: hidden;
+  /* ancho base: solo la imagen */
+  width: 64px;
+  height: auto;
+  min-height: 72px;
+  transition: width .35s cubic-bezier(.34,1.1,.64,1), box-shadow .25s, padding .35s;
+  white-space: nowrap;
+  font-size: 0;
+}
+
+#gb-fab:hover,
+#gb-fab.open {
+  width: 178px;
+  padding: 10px 14px;
+  box-shadow: -6px 0 28px rgba(var(--gb-accent-rgb), .55), -2px 0 50px rgba(0,0,0,.4);
+}
+
+/* Imagen del personaje */
+#gb-fab-img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+  /* Pequeño efecto de entrada */
+  transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  display: block;
+}
+
+/* Estado cerrado: ícono de chat SVG (visible cuando no hay imagen) */
+#gb-fab-icon {
+  width: 28px; height: 28px;
+  fill: #0e0e0e;
+  flex-shrink: 0;
+  display: none; /* se muestra solo si no hay imagen */
+}
+
+#gb-fab:hover #gb-fab-img,
+#gb-fab.open #gb-fab-img {
+  transform: scale(1.08);
+}
+
+/* Texto que aparece al hover */
+#gb-fab-label {
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  color: #0e0e0e;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  transition: opacity .2s .1s, max-width .3s;
+  text-align: left;
+  line-height: 1.3;
+  padding-left: 0;
+}
+
+#gb-fab:hover #gb-fab-label,
+#gb-fab.open #gb-fab-label {
+  opacity: 1;
+  max-width: 120px;
+  padding-left: 10px;
+}
+
+/* Ícono cerrar — reemplaza la imagen cuando está abierto */
+#gb-fab-close {
+  width: 22px; height: 22px;
+  fill: #0e0e0e;
+  flex-shrink: 0;
+  display: none;
+  position: absolute;
+  top: 8px; right: 8px;
+}
+
+#gb-fab.open #gb-fab-close {
+  display: block;
+}
+
+#gb-fab.open #gb-fab-img {
+  opacity: 0.5;
+}
+
+/* Badge notificación */
+#gb-badge {
+  position: absolute;
+  top: 6px; left: 6px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--gb-accent2);
+  border: 2px solid var(--gb-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  font-size: 10px; font-weight: 700;
+  color: #fff;
+  transition: transform .3s, opacity .3s;
+  pointer-events: none;
+}
+
+#gb-badge.hidden {
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* ══════════════════════════════════════
+
+/* ══════════════════════════════════════
+   WIDGET PRINCIPAL — estilo claude.ai
+══════════════════════════════════════ */
+#gb-widget {
+  position: fixed;
+  top: 50%;
+  right: 72px;
+  transform: translateY(-50%) translateX(16px) scale(.96);
+  width: 380px;
+  height: 600px;
+  max-height: calc(100vh - 60px);
+  display: flex;
+  flex-direction: column;
+  background: var(--gb-surface);
+  border: 1px solid var(--gb-border);
+  border-radius: var(--gb-radius);
+  overflow: hidden;
+  box-shadow: var(--gb-shadow);
+  z-index: 9997;
+  font-family: 'DM Sans', 'Exo 2', system-ui, sans-serif;
+  color: var(--gb-text);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s cubic-bezier(.16,1,.3,1),
+              transform .3s cubic-bezier(.16,1,.3,1);
+}
+
+#gb-widget.open {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(-50%) translateX(0) scale(1);
+}
+
+/* Borde con glow sutil al estar abierto */
+#gb-widget.open {
+  border-color: rgba(255,255,255,.1);
+}
+
+/* ── Header — personaje centrado estilo claude.ai ── */
+#gb-header {
+  background: linear-gradient(180deg, #0e1200 0%, var(--gb-surface2) 100%);
+  border-bottom: 1px solid var(--gb-border);
+  padding: 20px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow ambiental detrás del personaje */
+#gb-header::before {
+  content: '';
+  position: absolute;
+  top: -20px; left: 50%;
+  transform: translateX(-50%);
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200,240,0,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Fila de botones arriba (reset + cerrar) */
+#gb-header-actions {
+  position: absolute;
+  top: 10px; right: 10px;
+  display: flex;
+  gap: 4px;
+}
+
+/* Personaje — imagen grande centrada */
+#gb-header-char {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  object-position: bottom;
+  filter: drop-shadow(0 4px 20px rgba(200,240,0,.25));
+  margin-bottom: 10px;
+  animation: gb-float 4s ease-in-out infinite;
+}
+
+/* Fallback emoji si no carga el webp */
+#gb-header-char-fallback {
+  width: 90px; height: 90px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 20px rgba(200,240,0,.2));
+}
+
+@keyframes gb-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-5px); }
+}
+
+/* Info de nombre y estado — debajo del personaje */
+.gb-header-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.gb-header-name {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .2px;
+  color: var(--gb-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gb-header-name span { color: var(--gb-accent); }
+
+.gb-status-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gb-status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gb-accent);
+  box-shadow: 0 0 5px rgba(200,240,0,.9);
+  animation: gb-pulse 2.5s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes gb-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: .3; transform: scale(.7); }
+}
+
+.gb-header-sub {
+  font-size: 10px;
+  color: var(--gb-text-dim);
+  letter-spacing: .4px;
+}
+
+.gb-hbtn {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--gb-text-dim);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+  flex-shrink: 0;
+}
+.gb-hbtn:hover {
+  background: rgba(255,255,255,.06);
+  border-color: var(--gb-border);
+  color: var(--gb-text);
+}
+
+/* ── Área de mensajes ── */
+#gb-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  scroll-behavior: smooth;
+  background: var(--gb-bg);
+}
+
+#gb-messages::-webkit-scrollbar { width: 3px; }
+#gb-messages::-webkit-scrollbar-track { background: transparent; }
+#gb-messages::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,.08);
+  border-radius: 2px;
+}
+
+/* Divisor */
+.gb-divider {
+  text-align: center;
+  font-size: 9px;
+  color: var(--gb-text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 8px 0;
+  opacity: .5;
+}
+
+/* Filas de mensajes */
+.gb-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  animation: gb-msgin .2s cubic-bezier(.16,1,.3,1) both;
+}
+
+@keyframes gb-msgin {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.gb-row.user { flex-direction: row-reverse; }
+.gb-row.bot  { margin-bottom: 2px; }
+
+/* Avatar — minimalista, solo punto de color */
+.gb-av {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--gb-surface2);
+  border: 1.5px solid rgba(255,255,255,.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+.gb-av.bot  { border-color: rgba(200,240,0,.25); }
+.gb-av.user { display: none; } /* como claude.ai — usuario sin avatar */
+
+/* Burbujas — muy limpias */
+.gb-bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  letter-spacing: .01em;
+}
+
+.gb-bubble.bot {
+  background: transparent;
+  color: var(--gb-text);
+  padding-left: 4px;
+  border-radius: 0;
+  max-width: 90%;
+}
+
+.gb-bubble.user {
+  background: var(--gb-bubble-user);
+  border: 1px solid var(--gb-bubble-user-border);
+  border-radius: 14px 14px 4px 14px;
+  color: var(--gb-text);
+}
+
+/* Quick replies — tarjetas redondeadas estilo claude.ai */
+.gb-qr {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 0 4px 0;
+  width: 100%;
+}
+
+/* Cuando son pocas opciones de navegación (menú principal) — columna completa */
+.gb-qr-btn {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 11px 15px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.07);
+  background: var(--gb-surface2);
+  color: var(--gb-text);
+  cursor: pointer;
+  transition: all .15s;
+  white-space: normal;
+  letter-spacing: .01em;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+/* Flecha a la derecha */
+.gb-qr-btn::after {
+  content: '›';
+  font-size: 16px;
+  color: var(--gb-text-dim);
+  flex-shrink: 0;
+  transition: transform .15s, color .15s;
+}
+
+/* Botón de "volver" — más pequeño, sin flecha */
+.gb-qr-btn[data-back="true"],
+.gb-qr-btn:has-text("←") {
+  background: transparent;
+  border-color: rgba(255,255,255,.05);
+  color: var(--gb-text-dim);
+  font-size: 11px;
+  padding: 7px 12px;
+  justify-content: flex-start;
+}
+
+.gb-qr-btn:hover {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(200,240,0,.25);
+  color: var(--gb-accent);
+  transform: translateX(2px);
+}
+
+.gb-qr-btn:hover::after {
+  transform: translateX(3px);
+  color: var(--gb-accent);
+}
+
+/* Botones de "← Volver" — estilo diferente, sin flecha */
+.gb-qr-btn.gb-back-btn {
+  background: transparent;
+  border-color: rgba(255,255,255,.04);
+  color: var(--gb-text-dim);
+  font-size: 11px;
+  padding: 7px 12px;
+  max-width: fit-content;
+}
+.gb-qr-btn.gb-back-btn::after { display: none; }
+.gb-qr-btn.gb-back-btn:hover {
+  color: var(--gb-text);
+  border-color: rgba(255,255,255,.1);
+  transform: none;
+}
+
+/* Typing indicator */
+.gb-typing {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  width: fit-content;
+}
+
+.gb-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gb-text-dim);
+  animation: gb-bounce .9s ease-in-out infinite;
+}
+.gb-dot:nth-child(2) { animation-delay: .15s; }
+.gb-dot:nth-child(3) { animation-delay: .30s; }
+
+@keyframes gb-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: .3; }
+  30%            { transform: translateY(-5px); opacity: 1; }
+}
+
+/* Highlights en texto */
+#gb-messages .hl  { color: var(--gb-accent); font-weight: 600; }
+#gb-messages .hl2 { color: var(--gb-accent2); font-weight: 600; }
+
+/* ── Formulario de escalación ── */
+.gb-form {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(200,240,0,.15);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  animation: gb-msgin .25s cubic-bezier(.16,1,.3,1) both;
+  margin: 4px 0;
+}
+
+.gb-form-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--gb-accent);
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  margin-bottom: 2px;
+}
+
+.gb-input {
+  width: 100%;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: var(--gb-text);
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.gb-input:focus {
+  border-color: rgba(200,240,0,.4);
+  box-shadow: 0 0 0 2px rgba(200,240,0,.08);
+}
+.gb-input::placeholder { color: var(--gb-text-dim); }
+
+.gb-form select.gb-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23484440' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+.gb-form-submit {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  padding: 9px 0;
+  border-radius: 8px;
+  border: none;
+  background: var(--gb-accent);
+  color: #0a0a0a;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .15s;
+  margin-top: 2px;
+}
+.gb-form-submit:hover {
+  filter: brightness(1.08);
+  box-shadow: var(--gb-glow);
+}
+
+.gb-form-note {
+  font-size: 10px;
+  color: var(--gb-text-dim);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Barra de input — claude.ai style ── */
+#gb-inputbar {
+  border-top: 1px solid var(--gb-border);
+  padding: 12px 14px;
+  background: var(--gb-surface);
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Wrapper con borde animado al focus */
+#gb-input-wrap {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.09);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+#gb-input-wrap:focus-within {
+  border-color: rgba(200,240,0,.35);
+  box-shadow: 0 0 0 3px rgba(200,240,0,.07);
+}
+
+#gb-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  color: var(--gb-text);
+  font-family: inherit;
+  font-size: 13.5px;
+  outline: none;
+  resize: none;
+  max-height: 96px;
+  line-height: 1.5;
+  display: block;
+}
+#gb-input::placeholder { color: var(--gb-text-dim); }
+
+#gb-send {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  border: none;
+  background: var(--gb-accent);
+  color: #0a0a0a;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: all .15s;
+  opacity: .9;
+}
+#gb-send:hover {
+  opacity: 1;
+  box-shadow: var(--gb-glow);
+  transform: scale(1.05);
+}
+#gb-send:disabled { opacity: .25; cursor: default; transform: none; }
+
+/* ── Footer minimalista ── */
+#gb-footer {
+  padding: 5px 14px 7px;
+  background: var(--gb-surface);
+  border-top: 1px solid var(--gb-border);
+  text-align: center;
+  font-size: 9px;
+  color: var(--gb-text-dim);
+  letter-spacing: .3px;
+  opacity: .7;
+}
+
+#gb-footer span { color: rgba(200,240,0,.5); }
+
+/* ── Responsive mobile ── */
+@media (max-width: 480px) {
+  #gb-widget {
+    top: auto;
+    bottom: 0;
+    right: 0; left: 0;
+    width: 100%;
+    height: 70vh;
+    border-radius: 12px 12px 0 0;
+    transform: translateY(20px) scale(.98);
+    max-height: calc(100vh - 60px);
+  }
+  #gb-widget.open {
+    transform: translateY(0) scale(1);
+  }
+  #gb-fab-wrap {
+    top: auto;
+    bottom: 20px;
+    transform: none;
+    transition: opacity .25s, transform .25s;
+  }
+  #gb-fab-wrap.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(80px); /* se va hacia abajo en mobile */
+  }
+  #gb-fab {
+    border-radius: 50%;
+    width: 56px !important;
+    height: 56px;
+    min-height: 56px;
+    padding: 8px !important;
+    justify-content: center;
+  }
+  #gb-fab:hover {
+    width: 56px !important;
+    padding: 8px !important;
+  }
+  #gb-fab-label { display: none !important; }
+  #gb-fab-img { width: 36px; height: 36px; }
+}
+</style>
+
+<!-- Google Fonts para el widget -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@600;700&family=Exo+2:wght@400;500;600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- FAB lateral estilo Telcel -->
+<div id="gb-fab-wrap">
+  <button id="gb-fab" onclick="gbToggle()" aria-label="Abrir chat de soporte">
+    <!-- 
+      ILUSTRACIÓN: cambia el src por la ruta de tu .webp
+      Ejemplo: src="assets/img/glitch-bot.webp"
+    -->
+    <img
+      id="gb-fab-img"
+      src="assets/img/glitch-bot.webp"
+      alt="Asistente GlitchedBox"
+      onerror="this.style.display='none'; document.getElementById('gb-fab-icon').style.display='block';"
+    />
+    <!-- Fallback SVG si no carga el webp -->
+    <svg id="gb-fab-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2H4C2.9 2 2 2.9 2 4v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+    </svg>
+    <!-- Texto que aparece al hover -->
+    <span id="gb-fab-label">¿En qué<br>puedo ayudarte?</span>
+    <!-- Ícono cerrar (cuando está abierto) -->
+    <svg id="gb-fab-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+    <div id="gb-badge">1</div>
+  </button>
+</div>
+
+<!-- Widget principal -->
+<div id="gb-widget" role="dialog" aria-label="Chat de soporte GlitchedBox">
+
+  <!-- Header — personaje centrado -->
+  <div id="gb-header">
+    <!-- Botones arriba a la derecha -->
+    <div id="gb-header-actions">
+      <button class="gb-hbtn" onclick="gbReset()" title="Reiniciar" aria-label="Reiniciar">↺</button>
+      <button class="gb-hbtn" onclick="gbToggle()" title="Cerrar" aria-label="Cerrar">✕</button>
+    </div>
+    <!--
+      PERSONAJE: cambia src por la ruta de tu .webp
+      Ej: src="assets/img/glitch-bot.webp"
+    -->
+    <img
+      id="gb-header-char"
+      src="assets/img/glitch-bot.webp"
+      alt="Asistente GlitchedBox"
+      onerror="this.style.display='none'; document.getElementById('gb-header-char-fallback').style.display='flex';"
+    />
+    <div id="gb-header-char-fallback">🎲</div>
+
+    <div class="gb-header-info">
+      <div class="gb-header-name">Glitched<span>Box</span> Soporte</div>
+      <div class="gb-status-row">
+        <div class="gb-status-dot"></div>
+        <div class="gb-header-sub">EN LÍNEA · RESPUESTA RÁPIDA</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensajes -->
+  <div id="gb-messages" role="log" aria-live="polite"></div>
+
+  <!-- Input -->
+  <div id="gb-inputbar">
+    <div id="gb-input-wrap">
+      <textarea
+        id="gb-input"
+        rows="1"
+        placeholder="Escríbenos tu duda..."
+        maxlength="500"
+        aria-label="Mensaje"
+      ></textarea>
+    </div>
+    <button id="gb-send" onclick="gbSend()" aria-label="Enviar mensaje">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div id="gb-footer">Soporte oficial · <span>glitchedbox.co</span></div>
+
+</div>
+
+<script>
+(function() {
+'use strict';
+
+/* ══════════════════════════════════════
+   CONFIGURACIÓN — CAMBIAR AQUÍ
+══════════════════════════════════════ */
+const CFG = {
+  emailSoporte:      'soporte@glitchedbox.co',       // PLACEHOLDER_EMAIL_SOPORTE
+  emailPedidos:      'pedidos@glitchedbox.co',        // PLACEHOLDER_EMAIL_PEDIDOS
+  emailCancelaciones:'cancelaciones@glitchedbox.co',  // PLACEHOLDER_EMAIL_CANCELACIONES
+  emailContacto:     'contacto@glitchedbox.co',       // PLACEHOLDER_EMAIL_CONTACTO
+  tiempoRespuesta:   '2–4 horas hábiles',
+  horario:           'Lunes a viernes',
+  // Clases que usa tu sitio para el tema claro (separadas por |)
+  lightClasses:      'light|light-theme|tema-claro',
+  lightAttr:         'light', // valor de data-theme para tema claro
+};
+
+/* ══════════════════════════════════════
+   BASE DE CONOCIMIENTO — FAQ & FLUJOS
+══════════════════════════════════════ */
+const KB = {
+
+  welcome: {
+    text: '¡Hola! 👾 Soy el asistente de <span class="hl">GlitchedBox</span>.\n¿En qué puedo ayudarte?',
+    qr: ['🎲 ¿Qué es un Art Toy?', '📦 Mi pedido', '🚚 Envíos', '💳 Pagos', '🔄 Devoluciones', '🧑‍💻 Hablar con un agente']
+  },
+
+  flujos: {
+
+    /* ── FAQ PRODUCTO ── */
+    'que es un art toy': {
+      text: 'Los <span class="hl">art toys</span> son figuras de colección que combinan arte y diseño. No son simples juguetes: cada pieza es una obra con personalidad, historia y estilo propio.\n\nEn GlitchedBox cada personaje llegó a nuestro mundo por error a través de un "glitch" ✨',
+      qr: ['🧪 ¿De qué material son?', '✨ ¿Son piezas únicas?', '🎨 ¿Hacen personalizados?', '← Menú principal']
+    },
+
+    'de que material son': {
+      text: 'Nuestros art toys están hechos de <span class="hl">resina de alta calidad</span>. Algunos incorporan detalles pintados a mano.\n\nCada figura está cuidada hasta el último píxel para que luzca increíble tanto en vitrina como en tu feed 🖤',
+      qr: ['✨ ¿Son piezas únicas?', '← Menú principal']
+    },
+
+    'son piezas unicas': {
+      text: '¡Sí! Algunas son parte de una <span class="hl">serie limitada</span>, otras tienen detalles pintados a mano o elementos únicos.\n\nNos gusta que cada pieza tenga ese algo especial que la haga irrepetible 🎲',
+      qr: ['🎨 ¿Hacen personalizados?', '📦 Mi pedido', '← Menú principal']
+    },
+
+    'hacen personalizados': {
+      text: 'Por ahora <span class="hl2">no ofrecemos art toys personalizados</span>.\n\nPero quién sabe... si un día abrimos esa opción, lo anunciaremos a lo grande 👀\n\n¡Síguenos en Instagram para enterarte primero!',
+      qr: ['← Menú principal']
+    },
+
+    /* ── PEDIDOS ── */
+    'mi pedido': {
+      text: '¿Qué necesitas saber sobre tu pedido?',
+      qr: ['📍 Rastrear mi pedido', '❌ Cancelar pedido', '📦 Pedido dañado o incorrecto', '← Menú principal']
+    },
+
+    'rastrear mi pedido': {
+      text: 'Una vez procesado tu pedido, recibirás un correo con el <span class="hl">número de guía</span> y un enlace de seguimiento.\n\nSi ya tienes tu número de guía, puedes rastrear tu paquete directamente en el sitio de la paquetería.\n\n¿No recibiste el correo de confirmación?',
+      qr: ['🧑‍💻 Contactar soporte', '← Mi pedido', '← Menú principal']
+    },
+
+    'cancelar pedido': {
+      text: 'Las cancelaciones solo se permiten dentro de las <span class="hl">primeras 2 horas</span> después de realizar la compra, y siempre que el pedido no haya sido procesado o enviado.\n\nSi estás dentro del plazo, escríbenos de inmediato a:\n<span class="hl">cancelaciones@glitchedbox.co</span>',
+      qr: ['🧑‍💻 Contactar soporte', '← Mi pedido', '← Menú principal']
+    },
+
+    'pedido danado o incorrecto': {
+      text: 'Lamentamos que tu figura haya llegado dañada o incorrecta 😔\n\nSi aplica, podemos ofrecerte <span class="hl">reenvío o reemplazo sin costo</span>, según disponibilidad. Si no hay stock disponible, podremos ofrecer un <span class="hl">cupón o reembolso</span>.\n\nPara procesar tu caso necesitamos que nos reportes dentro de las primeras <span class="hl">48 horas</span> posteriores a la entrega:\n\n• 📸 Fotos del empaque exterior e interior\n• 📸 Fotos del daño o producto incorrecto\n• 🧾 Tu número de pedido\n\nCada caso se evalúa individualmente.',
+      qr: ['🧑‍💻 Abrir reporte de daño', '← Mi pedido', '← Menú principal']
+    },
+
+    /* ── ENVÍOS ── */
+    'envios': {
+      text: '🚚 <span class="hl">Envíos GlitchedBox:</span>\n\n• Enviamos a toda la <span class="hl">República Mexicana</span>\n• Actualmente <span class="hl2">no realizamos envíos internacionales</span>\n• Tiempo de entrega: <span class="hl">3 a 7 días hábiles</span>\n• Pedidos procesados: lunes a viernes, 1–3 días hábiles tras confirmar el pago\n• <span class="hl">Envío gratuito</span> en compras ≥ $2,500 MXN',
+      qr: ['📍 Costo de envío', '📅 Tiempos de entrega', '⚠️ Zonas extendidas', '📦 Paquete no entregado', '← Menú principal']
+    },
+
+    'costo de envio': {
+      text: 'El costo de envío se calcula automáticamente al finalizar tu compra, con base en el <span class="hl">peso, destino y tipo de servicio</span>.\n\n✅ <span class="hl">Envío gratis</span> en compras iguales o mayores a <span class="hl">$2,500 MXN</span>.\n\n⚠️ Este beneficio no aplica si tu dirección está en zona extendida.',
+      qr: ['⚠️ Zonas extendidas', '← Envíos', '← Menú principal']
+    },
+
+    'tiempos de entrega': {
+      text: '📅 <span class="hl">Tiempos estimados:</span>\n\n• Entrega: <span class="hl">3 a 7 días hábiles</span>\n• Procesamiento: 1–3 días hábiles (lunes a viernes)\n• Productos bajo pedido: +3 a 4 días hábiles adicionales\n\nUna vez enviado recibirás tu número de guía por correo.',
+      qr: ['← Envíos', '← Menú principal']
+    },
+
+    'zonas extendidas': {
+      text: '⚠️ Algunas direcciones en México pueden ser consideradas <span class="hl">zonas extendidas</span> por la paquetería.\n\nEn esos casos el costo adicional (generalmente entre <span class="hl">$199 y $300 MXN</span>) corre por cuenta del cliente.\n\nSi tu pedido cae en zona extendida, te contactamos antes de enviarlo. El cargo no está incluido en el envío gratuito.',
+      qr: ['← Envíos', '← Menú principal']
+    },
+
+    'paquete no entregado': {
+      text: 'Si tu paquete fue devuelto (dirección incorrecta, ausencia, etc.) nos ponemos en contacto para reprogramar el envío.\n\n⚠️ El <span class="hl">nuevo costo de envío</span> deberá ser cubierto por el cliente en ese caso.\n\nSi crees que hay un problema con tu entrega, contáctanos.',
+      qr: ['🧑‍💻 Contactar soporte', '← Envíos', '← Menú principal']
+    },
+
+    /* ── PAGOS ── */
+    'pagos': {
+      text: '💳 <span class="hl">Métodos de pago aceptados:</span>\n\n• Tarjetas de crédito y débito\n• PayPal\n• MercadoPago\n\nTodos los precios están en <span class="hl">pesos mexicanos (MXN)</span> e incluyen IVA.\n\nNo almacenamos los datos de tu tarjeta.',
+      qr: ['❓ Pago rechazado', '🧑‍💻 Problema con mi pago', '← Menú principal']
+    },
+
+    'pago rechazado': {
+      text: 'Los motivos más comunes de un pago rechazado son:\n\n• Fondos insuficientes\n• Tarjeta bloqueada por el banco\n• Datos incorrectos (CVV, fecha de vencimiento)\n• Límite de compras en línea\n\nIntenta con otra tarjeta o cambia el método de pago. Si el problema persiste, contáctanos.',
+      qr: ['🧑‍💻 Contactar soporte', '← Pagos', '← Menú principal']
+    },
+
+    /* ── DEVOLUCIONES ── */
+    'devoluciones': {
+      text: '🔄 <span class="hl">Política de devoluciones:</span>\n\nTodas las ventas son <span class="hl">finales</span>. No aceptamos devoluciones ni cambios por cambio de opinión, debido a la naturaleza limitada y coleccionable de nuestros productos.\n\n<span class="hl">Excepción:</span> Si tu figura llega dañada o recibiste un producto incorrecto, podemos ofrecer <span class="hl">reenvío, reemplazo, cupón o reembolso</span> según disponibilidad y evaluación del caso 📦',
+      qr: ['📦 Mi figura llegó dañada', '❌ Cancelar pedido', '← Menú principal']
+    },
+
+    'mi figura llego danada': {
+      text: 'Lamentamos que tu figura haya llegado dañada 😔\n\nSegún disponibilidad, podemos ofrecerte <span class="hl">reenvío, reemplazo, cupón o reembolso</span>. Cada caso se evalúa individualmente.\n\nPara procesarlo necesitamos que nos reportes dentro de las primeras <span class="hl">48 horas</span> posteriores a la entrega:\n\n• 📸 Fotos del empaque exterior e interior\n• 📸 Fotos del daño\n• 🧾 Tu número de pedido',
+      qr: ['🧑‍💻 Abrir reporte de daño', '← Menú principal']
+    },
+
+    /* ── PRIVACIDAD ── */
+    'privacidad': {
+      text: '🔒 <span class="hl">Tu privacidad importa:</span>\n\nGlitchedBox cumple con la <span class="hl">Ley Federal de Protección de Datos Personales</span> (LFPDPPP).\n\n• No compartimos ni vendemos tus datos\n• Los pagos se procesan por plataformas seguras (no guardamos datos de tarjeta)\n• Tienes derechos ARCO: Acceso, Rectificación, Cancelación y Oposición\n\nConsulta la política completa en nuestro sitio.',
+      qr: ['⚖️ Propiedad intelectual', '🔞 Edad mínima', '← Menú principal']
+    },
+
+    /* ── PROPIEDAD INTELECTUAL ── */
+    'propiedad intelectual': {
+      text: '⚖️ <span class="hl">Propiedad Intelectual:</span>\n\nTodos los diseños, personajes, imágenes y contenidos de GlitchedBox son de nuestra propiedad exclusiva y están protegidos por la <span class="hl">Ley Federal del Derecho de Autor</span>.\n\nLa marca GlitchedBox está registrada ante el <span class="hl">IMPI</span>.\n\nQueda <span class="hl2">estrictamente prohibido</span> copiar, reproducir, distribuir, revender o crear obras derivadas de nuestros personajes, diseños, imágenes o logotipos sin autorización expresa y por escrito de GlitchedBox.',
+      qr: ['← Menú principal']
+    },
+
+    /* ── EDAD MÍNIMA ── */
+    'edad minima': {
+      text: '🔞 <span class="hl">Edad mínima:</span>\n\nSolo pueden registrarse y realizar compras personas <span class="hl">mayores de 18 años</span>.\n\nAl crear una cuenta o realizar una compra, el usuario declara bajo protesta de decir verdad que cumple con este requisito.',
+      qr: ['← Menú principal']
+    },
+
+    /* ── ESCALACIÓN ── */
+    'abrir reporte de dano': { isEsc: true, escType: 'dano' },
+    'contactar soporte':     { isEsc: true, escType: 'soporte' },
+    'problema con mi pago':  { isEsc: true, escType: 'pago' },
+    'hablar con un agente':  { isEsc: true, escType: 'agente' },
+  }
+};
+
+/* ══════════════════════════════════════
+   MAPA DE KEYWORDS → FLUJO
+══════════════════════════════════════ */
+const KW = [
+  [/art.?toy|que.?es|figura|personaje|coleccion/i,       'que es un art toy'],
+  [/material|resina|hecho|fabricad/i,                    'de que material son'],
+  [/unic[oa]|limitad|especial|irrepetible/i,             'son piezas unicas'],
+  [/personaliz|encarg|custom/i,                          'hacen personalizados'],
+  [/rastrea|seguimiento|guia|tracking|donde.?esta/i,     'rastrear mi pedido'],
+  [/cancel/i,                                            'cancelar pedido'],
+  [/da[ñn]ad|roto|mal.?estado|incorrecto|equivocad|reenvio/i, 'pedido danado o incorrecto'],
+  [/pedido|orden|compra|mi.?paquete/i,                   'mi pedido'],
+  [/costo.?env[ií]o|cu[aá]nto.?cobran|precio.?env[ií]o/i,'costo de envio'],
+  [/tiempo|tarda|d[ií]as|cuando.?llega|demora/i,        'tiempos de entrega'],
+  [/zona.?extendida|cargo.?extra/i,                      'zonas extendidas'],
+  [/no.?entregad|devuelto|volvieron|regresaron/i,        'paquete no entregado'],
+  [/env[ií]o|entrega|paqueter[ií]a|envian|envian|mandan/i,'envios'],
+  [/pago.?rechazad|no.?pas[oó]|declinado|fail/i,        'pago rechazado'],
+  [/pago|cobro|pagar|tarjeta|paypal|mercado.?pago|precio/i,'pagos'],
+  [/devoluci[oó]n|cambio|regresar|reembolso/i,          'devoluciones'],
+  [/da[ñn]ad|roto|llego.?mal/i,                         'mi figura llego danada'],
+  [/privacidad|datos|arco|cookies|gdpr/i,                'privacidad'],
+  [/propiedad.?intelectual|copyright|copiar|diseño|reproduc|impi|marca.?registrada/i, 'propiedad intelectual'],
+  [/edad.?m[ií]nima|18.?a[ñn]os|menor.?edad|mayor.?de.?edad/i, 'edad minima'],
+  [/agente|humano|persona|asesor|soporte/i,              'hablar con un agente'],
+];
+
+/* ══════════════════════════════════════
+   ESTADO
+══════════════════════════════════════ */
+const msgsEl  = document.getElementById('gb-messages');
+const inputEl = document.getElementById('gb-input');
+const fabEl   = document.getElementById('gb-fab');
+const badgeEl = document.getElementById('gb-badge');
+const widgetEl= document.getElementById('gb-widget');
+
+/* ══════════════════════════════════════
+   DETECCIÓN DE TEMA
+══════════════════════════════════════ */
+function detectarTema() {
+  const html   = document.documentElement;
+  const body   = document.body;
+  const clases = CFG.lightClasses.split('|');
+
+  const esClaro =
+    html.getAttribute('data-theme') === CFG.lightAttr ||
+    body.getAttribute('data-theme') === CFG.lightAttr ||
+    clases.some(c => html.classList.contains(c) || body.classList.contains(c));
+
+  if (esClaro) {
+    widgetEl.classList.add('gb-light');
+  } else {
+    widgetEl.classList.remove('gb-light');
+  }
+}
+
+// Observar cambios de tema en tiempo real
+new MutationObserver(detectarTema).observe(document.documentElement, {
+  attributes: true, attributeFilter: ['class', 'data-theme']
+});
+new MutationObserver(detectarTema).observe(document.body, {
+  attributes: true, attributeFilter: ['class', 'data-theme']
+});
+
+/* ══════════════════════════════════════
+   TOGGLE WIDGET
+══════════════════════════════════════ */
+function gbToggle() {
+  const abierto = widgetEl.classList.toggle('open');
+  fabEl.classList.toggle('open', abierto);
+
+  // Ocultar/mostrar el botón lateral según estado del chat
+  const fabWrap = document.getElementById('gb-fab-wrap');
+  if (abierto) {
+    fabWrap.classList.add('hidden');
+    badgeEl.classList.add('hidden');
+    inputEl.focus();
+    detectarTema();
+  } else {
+    // Pequeño delay para que la animación de cierre del chat
+    // termine antes de que aparezca el botón
+    setTimeout(() => fabWrap.classList.remove('hidden'), 150);
+  }
+}
+window.gbToggle = gbToggle;
+
+/* ══════════════════════════════════════
+   HELPERS DOM
+══════════════════════════════════════ */
+function scrollFondo() {
+  setTimeout(() => { msgsEl.scrollTop = msgsEl.scrollHeight; }, 60);
+}
+
+function addBurbuja(html, lado = 'bot') {
+  const row = document.createElement('div');
+  row.className = `gb-row ${lado}`;
+
+  const av = document.createElement('div');
+  av.className = `gb-av ${lado === 'bot' ? 'bot' : 'user'}`;
+  av.textContent = lado === 'bot' ? '🎲' : '👤';
+
+  const bub = document.createElement('div');
+  bub.className = `gb-bubble ${lado}`;
+  bub.innerHTML = html.replace(/\n/g, '<br>');
+
+  if (lado === 'bot') { row.appendChild(av); row.appendChild(bub); }
+  else                { row.appendChild(bub); row.appendChild(av); }
+
+  msgsEl.appendChild(row);
+  scrollFondo();
+  return bub;
+}
+
+function addQR(replies) {
+  const wrap = document.createElement('div');
+  wrap.className = 'gb-qr';
+  replies.forEach(r => {
+    const btn = document.createElement('button');
+    // Botones de "volver" (empiezan con ←) — estilo diferente
+    const isBack = r.startsWith('←') || r.toLowerCase().includes('menú principal');
+    btn.className = 'gb-qr-btn' + (isBack ? ' gb-back-btn' : '');
+    btn.textContent = r;
+    btn.onclick = () => handleQR(r);
+    wrap.appendChild(btn);
+  });
+  msgsEl.appendChild(wrap);
+  scrollFondo();
+}
+
+function showTyping() {
+  const row = document.createElement('div');
+  row.className = 'gb-row bot'; row.id = 'gb-typing';
+  const av = document.createElement('div');
+  av.className = 'gb-av bot'; av.textContent = '🎲';
+  const ind = document.createElement('div');
+  ind.className = 'gb-typing';
+  ind.innerHTML = '<div class="gb-dot"></div><div class="gb-dot"></div><div class="gb-dot"></div>';
+  row.appendChild(av); row.appendChild(ind);
+  msgsEl.appendChild(row);
+  scrollFondo();
+}
+
+function hideTyping() {
+  const t = document.getElementById('gb-typing');
+  if (t) t.remove();
+}
+
+function clearQR() {
+  document.querySelectorAll('.gb-qr').forEach(e => e.remove());
+}
+
+/* ══════════════════════════════════════
+   FORMULARIO DE ESCALACIÓN
+══════════════════════════════════════ */
+function showForm(tipo) {
+  const titulos = {
+    dano:    '📸 REPORTE DE PRODUCTO DAÑADO',
+    soporte: '🧑‍💻 CONTACTAR CON SOPORTE',
+    pago:    '💳 PROBLEMA CON MI PAGO',
+    agente:  '🧑‍💻 HABLAR CON UN AGENTE',
+  };
+  const emailDestino = {
+    dano:    CFG.emailPedidos,
+    soporte: CFG.emailSoporte,
+    pago:    CFG.emailSoporte,
+    agente:  CFG.emailSoporte,
+  };
+
+  const form = document.createElement('div');
+  form.className = 'gb-form';
+  form.id = 'gb-esc-form';
+
+  const necesitaFotos = tipo === 'dano';
+
+  form.innerHTML = `
+    <div class="gb-form-title">${titulos[tipo] || '🧑‍💻 CONTACTAR SOPORTE'}</div>
+    <input class="gb-input" id="gbf-nombre" type="text"  placeholder="Tu nombre completo *" required />
+    <input class="gb-input" id="gbf-email"  type="email" placeholder="Tu correo electrónico *" required />
+    <input class="gb-input" id="gbf-orden"  type="text"  placeholder="Número de pedido (ej: #GB-12345)" />
+    <select class="gb-input" id="gbf-tipo">
+      <option value="">Tipo de problema...</option>
+      <option value="pedido_danado">Pedido dañado / incorrecto</option>
+      <option value="no_llego">Mi pedido no llegó</option>
+      <option value="pago">Problema con el pago</option>
+      <option value="cancelacion">Cancelación de pedido</option>
+      <option value="otro">Otro</option>
+    </select>
+    <textarea class="gb-input" id="gbf-desc" rows="2" placeholder="Descríbenos tu problema brevemente..."></textarea>
+    ${necesitaFotos ? `<p class="gb-form-note">📸 Por favor envía las fotos a <strong>${emailDestino[tipo]}</strong> junto con tu número de pedido para agilizar el proceso.</p>` : ''}
+    <button class="gb-form-submit" onclick="submitForm('${tipo}','${emailDestino[tipo]}')">ENVIAR SOLICITUD →</button>
+    <p class="gb-form-note">Respondemos en ${CFG.tiempoRespuesta} · ${CFG.horario}</p>
+  `;
+
+  msgsEl.appendChild(form);
+  scrollFondo();
+}
+
+function submitForm(tipo, email) {
+  const nombre = document.getElementById('gbf-nombre')?.value.trim();
+  const correo = document.getElementById('gbf-email')?.value.trim();
+  const orden  = document.getElementById('gbf-orden')?.value.trim();
+  const desc   = document.getElementById('gbf-desc')?.value.trim();
+
+  if (!nombre || !correo) {
+    const n = document.getElementById('gbf-nombre');
+    const e = document.getElementById('gbf-email');
+    if (!nombre) n.style.borderColor = 'var(--gb-accent2)';
+    if (!correo) e.style.borderColor = 'var(--gb-accent2)';
+    return;
+  }
+
+  const ticketId = 'GB-' + Math.floor(Math.random() * 90000 + 10000);
+  document.getElementById('gb-esc-form')?.remove();
+
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addBurbuja(
+      `✅ ¡Recibido, <span class="hl">${nombre}</span>!\n\n` +
+      `Tu número de ticket: <span class="hl">${ticketId}</span>\n\n` +
+      `Te responderemos en <span class="hl">${CFG.tiempoRespuesta}</span> al correo <span class="hl">${correo}</span>\n\n` +
+      (tipo === 'dano' ? `Recuerda enviarnos las fotos a <span class="hl">${email}</span> con tu número de ticket. Evaluaremos tu caso y te ofreceremos la mejor solución según disponibilidad 📸` : `Si necesitas atención urgente escríbenos a <span class="hl">${email}</span>`)
+    );
+    addQR(['🏠 Menú principal', '❓ Otra pregunta']);
+  }, 1200);
+}
+window.submitForm = submitForm;
+
+/* ══════════════════════════════════════
+   MOTOR DE FLUJOS
+══════════════════════════════════════ */
+function ejecutarFlujo(key) {
+  const flujo = KB.flujos[key];
+  if (!flujo) return false;
+
+  if (flujo.isEsc) {
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      const prefijos = {
+        dano:    'Para reportar tu producto dañado o incorrecto, completa el siguiente formulario. Lo evaluaremos y te contactaremos con la solución:',
+        soporte: 'Con gusto te conectamos con nuestro equipo. Completa el formulario:',
+        pago:    'Vamos a revisar el problema con tu pago. Completa el formulario:',
+        agente:  'Te conectamos con un agente. Completa el formulario:',
+      };
+      addBurbuja(prefijos[flujo.escType] || 'Completa el formulario para continuar:');
+      showForm(flujo.escType);
+    }, 800);
+    return true;
+  }
+
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addBurbuja(flujo.text);
+    if (flujo.qr?.length) addQR(flujo.qr);
+  }, 800);
+  return true;
+}
+
+/* ══════════════════════════════════════
+   MANEJO DE QUICK REPLIES
+══════════════════════════════════════ */
+function handleQR(texto) {
+  clearQR();
+  document.getElementById('gb-esc-form')?.remove();
+
+  const clean = texto.toLowerCase()
+    .replace(/^[^\w\sáéíóúüñ]*\s*/u, '')
+    .replace(/[¿?¡!]/g, '')
+    .trim();
+
+  if (clean === 'menú principal' || clean === '← menú principal') {
+    addBurbuja(KB.welcome.text);
+    addQR(KB.welcome.qr);
+    return;
+  }
+
+  // Mensaje del usuario visible
+  addBurbuja(texto, 'user');
+
+  // Buscar flujo exacto primero
+  const keyClean = clean
+    .replace(/^← /, '')
+    .replace(/[¿?¡!]/g, '')
+    .trim()
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  // Mapa rápido de etiquetas comunes de botones
+  const BTNMAP = {
+    'que es un art toy':          'que es un art toy',
+    'de que material son':        'de que material son',
+    'hacen personalizados':       'hacen personalizados',
+    'son piezas unicas':          'son piezas unicas',
+    'mi pedido':                  'mi pedido',
+    'rastrear mi pedido':         'rastrear mi pedido',
+    'cancelar pedido':            'cancelar pedido',
+    'pedido danado o incorrecto': 'pedido danado o incorrecto',
+    'envios':                     'envios',
+    'costo de envio':             'costo de envio',
+    'tiempos de entrega':         'tiempos de entrega',
+    'zonas extendidas':           'zonas extendidas',
+    'paquete no entregado':       'paquete no entregado',
+    'pagos':                      'pagos',
+    'pago rechazado':             'pago rechazado',
+    'devoluciones':               'devoluciones',
+    'mi figura llego danada':     'mi figura llego danada',
+    'privacidad':                 'privacidad',
+    'propiedad intelectual':      'propiedad intelectual',
+    'edad minima':                'edad minima',
+    'abrir reporte de dano':      'abrir reporte de dano',
+    'contactar soporte':          'contactar soporte',
+    'problema con mi pago':       'problema con mi pago',
+    'hablar con un agente':       'hablar con un agente',
+  };
+
+  // Normalizar botón a key de KB
+  const normalized = keyClean.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const found = Object.keys(BTNMAP).find(k =>
+    normalized.includes(k) || k.includes(normalized.substring(0, 10))
+  );
+
+  if (found && ejecutarFlujo(BTNMAP[found])) return;
+
+  // Fallback por keywords
+  const kwMatch = KW.find(([rx]) => rx.test(texto));
+  if (kwMatch && ejecutarFlujo(kwMatch[1])) return;
+
+  fallback(texto);
+}
+
+/* ══════════════════════════════════════
+   TEXTO LIBRE DEL USUARIO
+══════════════════════════════════════ */
+function gbSend() {
+  const texto = inputEl.value.trim();
+  if (!texto) return;
+
+  clearQR();
+  document.getElementById('gb-esc-form')?.remove();
+  addBurbuja(texto, 'user');
+  inputEl.value = '';
+  autoResize();
+
+  const kwMatch = KW.find(([rx]) => rx.test(texto));
+  if (kwMatch && ejecutarFlujo(kwMatch[1])) return;
+
+  fallback(texto);
+}
+window.gbSend = gbSend;
+
+function fallback(texto) {
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addBurbuja(
+      `Hmm, no encontré una respuesta automática para "<span class="hl">${texto.substring(0,40)}${texto.length>40?'...':''}</span>".\n\n¿Te ayudo con algo de esto?`
+    );
+    addQR(['📦 Mi pedido', '🚚 Envíos', '💳 Pagos', '🔄 Devoluciones', '🧑‍💻 Hablar con un agente']);
+  }, 900);
+}
+
+/* ══════════════════════════════════════
+   RESET
+══════════════════════════════════════ */
+function gbReset() {
+  msgsEl.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'gb-divider';
+  div.textContent = '— NUEVA CONVERSACIÓN —';
+  msgsEl.appendChild(div);
+  initWelcome();
+}
+window.gbReset = gbReset;
+
+/* ══════════════════════════════════════
+   AUTO-RESIZE TEXTAREA
+══════════════════════════════════════ */
+function autoResize() {
+  inputEl.style.height = 'auto';
+  inputEl.style.height = Math.min(inputEl.scrollHeight, 96) + 'px';
+}
+
+inputEl.addEventListener('input', autoResize);
+inputEl.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    gbSend();
+  }
+});
+
+/* ══════════════════════════════════════
+   INICIO
+══════════════════════════════════════ */
+function initWelcome() {
+  showTyping();
+  setTimeout(() => {
+    hideTyping();
+    addBurbuja(KB.welcome.text);
+    addQR(KB.welcome.qr);
+  }, 700);
+}
+
+// Inicializar al cargar
+detectarTema();
+initWelcome();
+
+})(); // fin IIFE
+</script>   
 </body>
 </html>
