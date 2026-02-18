@@ -26,7 +26,7 @@
   /* Layout */
   --container-max: 80rem;  /* 1280px */
 
-  /* Radii */
+  /* Radius */
   --radius-1: 0.5rem;   /* 8px */
   --radius-2: 0.75rem;  /* 12px */
   --radius-3: 0.875rem; /* 14px */
@@ -77,11 +77,46 @@
   /* Brand accents (NO estados) */
   --accent-green: #39FF14;   /* verde neón */
   --accent-purple: #8b5cf6;  /* morado acento */  
-  --accent-orange: #FF4B33;
+  --accent-orange: #FF6B2B;
+
+  /* Newsletter CTA (naranja fijo) */
+  --newsletter-cta-bg: var(--accent-orange);
+  --newsletter-cta-bg-hover: color-mix(in srgb, var(--accent-orange) 92%, #ffffff 8%);
+  --newsletter-cta-bg-pressed: color-mix(in srgb, var(--accent-orange) 82%, #000000 18%);
+  --newsletter-cta-border: color-mix(in srgb, var(--accent-orange) 55%, transparent);
+  --newsletter-cta-border-hover: color-mix(in srgb, var(--accent-orange) 75%, transparent);
+  --newsletter-cta-text: #ffffff;
+  --newsletter-cta-shadow: 0 10px 24px rgba(0,0,0,.28);
+
+  /* Glow border gradient (card hover) */
+  --glow-from: #FF30FF;      /* magenta */
+  --glow-to: #00b7ff;        /* cyan */
+  --glow-angle: 163deg;
+  --glow-width: 2px;
+
+  /* Delivery / Order status (badges) */
+  --status-success-fg: var(--success);
+  --status-success-bg: rgba(34, 197, 94, 0.125);   /* success + 0x20 */
+
+  --status-warning-fg: var(--warning);
+  --status-warning-bg: rgba(245, 158, 11, 0.125);  /* warning + 0x20 */
+
+  --status-danger-fg: var(--danger);
+  --status-danger-bg: rgba(239, 68, 68, 0.125);    /* danger + 0x20 */
+                       
+  --status-neon-fg: #00ff88;
+  --status-neon-bg: rgba(0, 255, 136, 0.125);      /* Delivered + 0x20 */
+
+  /* Stars */
+  --star-yellow: #fbbf24;
+  --star-gray: #9ca3af;
+
+  /* Favourite */
+  --Favourite: #ef4444;
 
   /* Component heights (computed at runtime by JS) */
   --header-h: 76px;
-  --breadcrumbs-h: 44px;
+  --breadcrumbs-h: 36px;
 
   /* Controls (inputs/buttons) */
   --control-h: 42px;
@@ -121,6 +156,9 @@
   --accent-purple-glow: rgba(139, 92, 246, 0.22);
 
   --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-accent) 75%, transparent);
+  --focus-glow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 
 /* ============================================
    EXTRA TOKENS — overlays / glass / purple UI (DARK)
@@ -139,16 +177,6 @@
 --glass-3: rgba(255, 255, 255, 0.10);      /* bordes más fuertes */
 --highlight-1: rgba(255, 255, 255, 0.14);  /* highlight superior */
 --inset-1: rgba(0, 0, 0, 0.25);            /* sombras internas */
-
-/* Overlays */
---overlay-backdrop: rgba(0, 0, 0, 0.55);   /* backdrop modal/search */
---overlay-panel-bg: color-mix(in srgb, var(--color-surface) 92%, transparent);
---overlay-panel-border: var(--color-border);
-
-/* Back-compat (por si ya usaste estos nombres en reglas) */
---accent-purple-soft: var(--purple-soft);
---accent-purple-border: var(--purple-border);
---accent-purple-glow: var(--purple-glow);
 
   /* Inputs */
   --color-input-bg: #1a1a1a;
@@ -174,7 +202,7 @@
    §3  THEME: LIGHT
    ============================================ */
 :root[data-theme="light"] {
-  --color-bg: #ffffff;
+  --color-bg: #fcfcfc;
   --color-surface: #f5f5f5;
   --color-surface-2: #eeeeee;
   --color-surface-3: #e8e8e8;
@@ -186,18 +214,34 @@
   --color-border: rgba(17, 17, 17, 0.12);
   --color-border-strong: rgba(17, 17, 17, 0.18);
 
-  --color-accent: var(--accent-orange);
-  --color-accent-contrast: #0b0b0b;
-  --color-accent-subtle: rgba(255, 75, 51, 0.14);
-  --color-accent-border: rgba(255, 75, 51, 0.35);
+  /* Accent — naranja mandarina (separado del rojo de --danger) */
+  --color-accent: #FF6B2B;
+  --color-accent-contrast: #ffffff;
+  --color-accent-subtle: rgba(255, 107, 43, 0.12);
+  --color-accent-border: rgba(255, 107, 43, 0.40);
 
   --focus-ring: 0 0 0 2px color-mix(in srgb, var(--color-accent) 65%, transparent);
+  --focus-glow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 22%, transparent),
+    0 0 14px color-mix(in srgb, var(--color-accent) 10%, transparent);
+
+  /* Purple UI (hover/focus — mismo púrpura en ambos temas) */
+  --accent-purple-soft: rgba(139, 92, 246, 0.10);
+  --accent-purple-border: rgba(139, 92, 246, 0.40);
+  --accent-purple-glow: rgba(139, 92, 246, 0.18);
+
+  /* Glass / tints neutrales (light) */
+  --glass-1: rgba(0, 0, 0, 0.03);
+  --glass-2: rgba(0, 0, 0, 0.05);
+  --glass-3: rgba(0, 0, 0, 0.08);
+  --highlight-1: rgba(255, 255, 255, 0.80);
+  --inset-1: rgba(0, 0, 0, 0.06);
 
   /* Inputs */
   --color-input-bg: #f3f4f6;
   --color-input-border: rgba(0, 0, 0, 0.12);
   --color-input-placeholder: #6b7280;
-  --color-input-focus: #8b5cf6;
+  --color-input-focus: #7c3aed;
 
   /* Theme switch */
   --switch-bg: rgba(17, 17, 17, 0.06);
@@ -210,6 +254,10 @@
   --footer-bg: #f1f1f6;
   --footer-bottom-bg: #e4e4eb;
   --footer-separator: rgba(0, 0, 0, 0.12);
+
+  /* Shadows (lighter for light mode) */
+  --shadow-1: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 
@@ -252,10 +300,6 @@ input {
 a {
   color: inherit;
   text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
 }
 
 
@@ -303,7 +347,6 @@ a:hover {
   }
 }
 
-
 /* ============================================
    §6  TYPOGRAPHY
    ============================================ */
@@ -338,7 +381,6 @@ a:hover {
   color: var(--color-text-muted);
 }
 
-
 /* ============================================
    §7  ICON SYSTEM
    ============================================ */
@@ -364,7 +406,6 @@ a:hover {
 .icon-wrap--24 { --icon-box: 24px; --icon-size: 20px; }
 .icon-wrap--32 { --icon-box: 32px; --icon-size: 32px; }
 .icon-wrap--40 { --icon-box: 40px; --icon-size: 40px; }
-
 
 /* ============================================
    §8  BUTTONS
@@ -400,7 +441,7 @@ a:hover {
     color var(--dur-1) var(--ease-out);
 }
 
-.header .icon-button:focus{
+.header .icon-button:focus-visible {
   outline: none;
   border-color: var(--color-accent);
   box-shadow:
@@ -408,24 +449,14 @@ a:hover {
     0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
-.header .icon-button:focus .icon-wrap,
-.header .icon-button:focus svg{
+.header .icon-button:focus-visible .icon-wrap,
+.header .icon-button:focus-visible svg {
   color: var(--color-input-focus);
-  stroke: currentColor; /* si tu svg usa stroke */
-}
-
-.header .icon-button:focus-visible{
-  outline: none;
-  border-color: var(--color-accent);
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
-    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .header .icon-button:active .icon-wrap,
-.header .icon-button:active svg{
+.header .icon-button:active svg {
   color: var(--color-input-focus);
-  stroke: currentColor;
 }
 
 .icon-button span {
@@ -454,6 +485,11 @@ a:hover {
 /* Hide text on mobile, show on desktop */
 .icon-button > span:not(.icon-wrap) {
   display: none;
+}
+
+/* BUT: keep cart badge visible on mobile */
+.icon-button > .cart-badge{
+  display: inline-flex;
 }
 
 @media (min-width: 64rem) {
@@ -485,6 +521,36 @@ a:hover {
   background: linear-gradient(180deg, var(--color-accent-subtle), rgba(255, 255, 255, 0.02));
 }
 
+/* ============================================
+   §9.1  RATING / STARS
+   ============================================ */
+.rating{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rating__star{
+  width: var(--star-size, 16px);
+  height: var(--star-size, 16px);
+  display: inline-flex;
+}
+
+.rating__star svg{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Sizes */
+.rating--sm{ --star-size: 16px; }
+.rating--lg{ --star-size: 24px; }
+
+/* Yellow outline (default Glitched Box style) */
+.rating--outline-yellow .rating__star svg{
+  fill: transparent;
+  stroke: var(--star-yellow);
+}
 
 /* ============================================
    §10  HEADER
@@ -529,9 +595,9 @@ a:hover {
   position: relative;
   width: 100%;
   background: transparent;
-  border: 0 !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
+  border: 0;
+  padding: 0;
+  border-radius: 0;
   box-shadow: none;
 }
 
@@ -555,7 +621,11 @@ a:hover {
   color: var(--color-text);
   font-size: var(--t-rg);
   line-height: 1;
-  transition: border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
@@ -584,12 +654,12 @@ a:hover {
   box-shadow: 0 0 0 1px var(--accent-purple-glow);
 }
 
-.search-container:hover .search-input::placeholder{
-  color: #ffffff;
+.search-container:hover .search-input::placeholder {
+  color: var(--color-text);
 }
 
-.search-container:hover .search-icon{
-  color: #ffffff;
+.search-container:hover .search-icon {
+  color: var(--color-text);
 }
 
 /* Header actions */
@@ -599,6 +669,7 @@ a:hover {
   gap: var(--size-3);
 }
 
+/* ---- Header button areas: default muted ---- */
 .header-actions,
 .header-actions a,
 .header-actions button,
@@ -607,45 +678,48 @@ a:hover {
   color: var(--color-text-secondary);
 }
 
-.header-actions a:hover,
-.header-actions button:hover,
+.primary-nav .icon-button,
+.primary-nav .icon-button span {
+  color: var(--color-text-secondary);
+}
+
+/* ---- HOVER: all header icon-buttons → white (full contrast) ---- */
 .header-actions .icon-button:hover,
 .header-actions .icon-button:hover span,
-.header-actions a:focus-visible,
-.header-actions button:focus-visible,
-.header-actions .icon-button:focus-visible {
-  color: #ffffff;
-}
-
-.header-actions .icon-button:active,
-.header-actions .icon-button:active span {
-  color: var(--color-input-focus);
-}
-
-/* Focus: ícono y texto púrpura */
-.header-actions .icon-button:focus,
-.header-actions .icon-button:focus span,
-.header-actions .icon-button:focus .icon-wrap,
-.header-actions .icon-button:focus svg {
-  color: var(--color-input-focus);
-}
-
-/* Asegurar que iconos también se pongan blancos en hover */
 .header-actions .icon-button:hover .icon-wrap,
-.header-actions .icon-button:hover svg {
-  color: #ffffff;
+.header-actions .icon-button:hover svg,
+.primary-nav .icon-button:hover,
+.primary-nav .icon-button:hover span,
+.primary-nav .icon-button:hover .icon-wrap,
+.primary-nav .icon-button:hover svg {
+  color: var(--color-text);
 }
 
-/* Asegurar que el texto también se ponga blanco en hover */
-.header-actions .icon-button:hover span:not(.icon-wrap) {
-  color: #ffffff;
+/* ---- FOCUS-VISIBLE (Tab): all → purple text + green ring ---- */
+.header-actions .icon-button:focus-visible,
+.header-actions .icon-button:focus-visible span,
+.header-actions .icon-button:focus-visible .icon-wrap,
+.header-actions .icon-button:focus-visible svg,
+.primary-nav .icon-button:focus-visible,
+.primary-nav .icon-button:focus-visible span,
+.primary-nav .icon-button:focus-visible .icon-wrap,
+.primary-nav .icon-button:focus-visible svg {
+  color: var(--color-input-focus);
 }
 
+/* ---- ACTIVE (click): all → purple ---- */
 .header-actions .icon-button:active,
-.header-actions .icon-button:active span {
-  color: #ffffff;
+.header-actions .icon-button:active span,
+.header-actions .icon-button:active .icon-wrap,
+.header-actions .icon-button:active svg,
+.primary-nav .icon-button:active,
+.primary-nav .icon-button:active span,
+.primary-nav .icon-button:active .icon-wrap,
+.primary-nav .icon-button:active svg {
+  color: var(--color-input-focus);
 }
 
+/* SVG sizing for header-actions */
 .header-actions .icon-button svg {
   width: 20px;
   height: 20px;
@@ -653,7 +727,8 @@ a:hover {
   color: inherit;
 }
 
-.header-actions .icon-button svg path[fill]:not([fill="none"]) {
+.header-actions .icon-button svg path[fill]:not([fill="none"]),
+.primary-nav .icon-button svg path[fill]:not([fill="none"]) {
   fill: currentColor;
   stroke: none;
 }
@@ -667,8 +742,8 @@ a:hover {
   position: absolute;
   top: -6px;
   right: -6px;
-  background: var(--color-accent);
-  color: var(--color-accent-contrast);
+  background: var(--accent-purple) !important;
+  color: #ffffff !important;
   font-size: var(--t-tn);
   font-weight: 800;
   padding: 2px 6px;
@@ -694,6 +769,276 @@ a:hover {
   .search-toggle { display: inline-flex; }
 }
 
+/* ============================================
+   §10.1  HAMBURGER MENU & MOBILE NAV
+   ============================================ */
+
+/* Hamburger Toggle Button */
+.hamburger-toggle {
+  display: none; /* Hidden on desktop */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--size-3);
+  margin-right: var(--size-3);
+  border-radius: var(--radius-2);
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.hamburger-toggle:hover {
+  background: var(--accent-purple-soft);
+}
+
+.hamburger-toggle:active {
+  transform: scale(0.95);
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 20px;
+  height: 16px;
+}
+
+.hamburger-icon span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: all var(--dur-2) var(--ease-out);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out);
+}
+
+.mobile-menu.is-open {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.mobile-menu__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.mobile-menu__panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(320px, 85vw);
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  box-shadow: var(--shadow-2);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform var(--dur-3) var(--ease-out);
+}
+
+.mobile-menu.is-open .mobile-menu__panel {
+  transform: translateX(0);
+}
+
+.mobile-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--size-5) var(--size-6);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.mobile-menu__title {
+  font-size: var(--h-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.mobile-menu__close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--size-2);
+  color: var(--color-text-muted);
+  border-radius: var(--radius-2);
+  transition: all var(--dur-1) var(--ease-out);
+}
+
+.mobile-menu__close:hover {
+  background: var(--accent-purple-soft);
+  color: var(--color-text);
+}
+
+.mobile-menu__nav {
+  padding: var(--size-4) 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  gap: var(--size-4);
+  padding: var(--size-5) var(--size-6);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--t-rg);
+  font-weight: 500;
+  transition: all var(--dur-1) var(--ease-out);
+  border-left: 3px solid transparent;
+}
+
+/* Asegurar que los iconos tengan el color correcto */
+.mobile-menu__link .icon-wrap,
+.mobile-menu__link svg {
+  color: var(--color-text);
+}
+
+.mobile-menu__link{
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover (solo dispositivos con hover real) */
+@media (hover: hover) and (pointer: fine){
+  .mobile-menu__link:hover{
+    background: var(--accent-purple-soft);
+    border-left-color: var(--color-accent);
+    color: var(--color-text);
+  }
+  .mobile-menu__link:hover .icon-wrap,
+  .mobile-menu__link:hover svg{
+    color: var(--color-text);
+  }
+}
+
+/* Touch/Keyboard feedback (mobile) */
+.mobile-menu__link:active,
+.mobile-menu__link:focus-visible{
+  background: var(--accent-purple-soft);
+  border-left-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.mobile-menu__link:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(139,92,246,.35), var(--shadow-1);
+}
+
+.mobile-menu__link:active .icon-wrap,
+.mobile-menu__link:active svg,
+.mobile-menu__link:focus-visible .icon-wrap,
+.mobile-menu__link:focus-visible svg{
+  color: var(--color-text);
+}
+/* Separator (between nav and settings) */
+.mobile-menu__separator{
+  height: 1px;
+  background: var(--color-border);
+  margin: var(--size-3) 0;
+  opacity: .9;
+}
+
+/* Reset button styling for menu rows */
+.mobile-menu__nav button.mobile-menu__link{
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+/* Settings rows (Idioma / Tema)
+   - Deben verse igual que el resto de items (.mobile-menu__link)
+   - Solo mantenemos una sombra sutil (como pediste)
+*/
+.mobile-menu__link--settings{
+  box-shadow: var(--shadow-1);
+}
+
+.mobile-menu__link--settings:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 40%, transparent), var(--shadow-1);
+}
+
+/* Primary Navigation */
+.primary-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  margin-left: var(--size-6);
+}
+
+/* Responsive: Show hamburger, hide primary nav on mobile */
+@media (max-width: 64rem) {
+  .hamburger-toggle {
+    display: flex;
+  }
+  
+  .primary-nav {
+    display: none;
+  }
+  
+  /* Ocultar idioma y toggle de tema en mobile (están en hamburguesa) */
+  .language-selector,
+  .theme-switch {
+    display: none;
+  }
+
+  .header-actions .icon-button:not(.search-toggle):not(.cart-button) {
+  display: none;
+}
+
+  .breadcrumbs-bar .language-selector,
+  .breadcrumbs-bar .theme-switch {
+  display: none;
+}
+}
+
+/* ============================================
+   Mobile menu: settings 
+   ============================================ */
+
+/* En desktop (hover real) */
+@media (hover: hover) and (pointer: fine){
+  button.mobile-menu__link.mobile-menu__link--settings:hover{
+    background: var(--accent-purple-soft);
+    border-left-color: var(--color-accent);
+    color: var(--color-text);
+    box-shadow: var(--shadow-1);
+  }
+}
+
+/* En mobile/touch: feedback al tap */
+button.mobile-menu__link.mobile-menu__link--settings:active{
+  background: var(--accent-purple);
+  border-left-color: var(--color-accent);
+  color: var(--color-text);
+  box-shadow: var(--shadow-1);
+}
+
+/* Focus visible (teclado / accesibilidad) */
+button.mobile-menu__link.mobile-menu__link--settings:focus-visible{
+  background: var(--accent-purple-soft);
+  border-left-color: var(--color-accent);
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--color-accent) 40%, transparent),
+    var(--shadow-1);
+}
 
 /* ============================================
    §11  BREADCRUMBS
@@ -733,14 +1078,14 @@ a:hover {
   align-items: center;
   justify-content: space-between;
   gap: var(--size-5);
-  padding-block: 8px;
+  padding-block: 4px;
   padding-inline: 0;
   min-height: var(--breadcrumbs-h);
 }
 
 @media (min-width: 64rem) {
   .breadcrumbs-bar__inner {
-    padding-block: 12px;
+    padding-block: 8px;
   }
 }
 
@@ -759,14 +1104,10 @@ a:hover {
 /* Separadores: siempre tenue */
 .breadcrumbs .separator,
 .breadcrumbs .breadcrumb-sep,
-.breadcrumbs span[aria-hidden="true"]{
+.breadcrumbs span[aria-hidden="true"] {
   color: var(--color-text-muted);
-  opacity: 0.7;
-}
-
-.breadcrumb-sep{
-  color: var(--color-text-muted);
-  opacity: 0.7;
+  opacity: 0.5;
+  white-space: nowrap;
 }
 
 .breadcrumbs::-webkit-scrollbar {
@@ -785,6 +1126,7 @@ a:hover {
 
 .breadcrumb-link:hover {
   color: var(--color-input-focus);
+  text-decoration: none;
 }
 
 .breadcrumb-link:focus-visible {
@@ -802,11 +1144,121 @@ a:hover {
   white-space: nowrap;
 }
 
-.breadcrumb-sep {
-  color: var(--color-text-muted);
-  opacity: 0.5;
-  white-space: nowrap;
+
+/* ============================================
+   §11.1  LANGUAGE SELECTOR
+   ============================================ */
+.language-selector {
+  position: relative;
+  display: inline-flex;
 }
+
+.language-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+  padding: var(--size-2) var(--size-3);
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+  color: var(--color-text-muted);
+  font-size: var(--t-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-1) var(--ease-out);
+}
+
+.language-toggle:hover {
+  background: var(--accent-purple-soft);
+  border-color: var(--accent-purple-border);
+  box-shadow: 0 0 0 1px var(--accent-purple-glow);
+  color: var(--color-text);
+}
+
+.language-toggle:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
+  color: var(--color-input-focus);
+}
+
+.language-toggle svg {
+  width: 16px;
+  height: 16px;
+}
+
+.language-toggle-chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--dur-2) var(--ease-out);
+}
+
+.language-selector.is-open .language-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 140px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2);
+  box-shadow: var(--shadow-1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: all var(--dur-2) var(--ease-out);
+  z-index: 60;
+}
+
+/* Abrir con hover */
+.language-selector:hover .language-dropdown,
+.language-selector.is-open .language-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  padding: var(--size-3) var(--size-4);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--t-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.language-option:hover {
+  background: var(--accent-purple-soft);
+  color: var(--color-input-focus);
+}
+
+.language-option.active {
+  background: var(--accent-purple-soft);
+  color: var(--color-input-focus);
+  font-weight: 700;
+}
+
+.language-option:first-child {
+  border-radius: var(--radius-2) var(--radius-2) 0 0;
+}
+
+.language-option:last-child {
+  border-radius: 0 0 var(--radius-2) var(--radius-2);
+}
+
 
 /* ============================================
    §12  THEME SWITCH (Sun ↔ Moon)
@@ -1102,9 +1554,9 @@ body.is-locked {
 
 .newsletter-title {
   margin: 0 0 var(--size-3);
-  font-size: var(--h-lg);
+  font-size: var(--h-md);
   line-height: var(--lh-120);
-  font-weight: 900;
+  font-weight: 600;
   color: var(--color-text);
 }
 
@@ -1131,7 +1583,11 @@ body.is-locked {
   color: var(--color-text);
   font-size: var(--t-rg);
   outline: none;
-  transition: border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
+  transition:
+    color var(--dur-1) var(--ease-out),
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out);
 }
 
 .newsletter-input::placeholder {
@@ -1146,7 +1602,7 @@ body.is-locked {
 }
 
 .newsletter-input:hover::placeholder {
-  color: #ffffff;
+  color: var(--color-text);
 }
 
 .newsletter-input:focus {
@@ -1164,26 +1620,58 @@ body.is-locked {
   background: rgba(0, 0, 0, 0.03);
 }
 
-.newsletter-button {
+.newsletter-button{
   padding: var(--size-4) var(--size-5);
   border-radius: var(--radius-1);
-  border: 1px solid var(--color-accent-border);
-  background: var(--color-accent-subtle);
-  color: var(--color-text);
+  border: 1px solid var(--newsletter-cta-border);
+  background: var(--newsletter-cta-bg);
+  color: var(--newsletter-cta-text);
   font-weight: 800;
   cursor: pointer;
-  transition: background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+  box-shadow: var(--newsletter-cta-shadow);
+  transition:
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    transform var(--dur-1) var(--ease-out);
 }
 
-.newsletter-button:hover {
-  background: color-mix(in srgb, var(--color-accent-subtle) 150%, transparent);
+.newsletter-button:hover{
+  background: var(--newsletter-cta-bg-hover);
+  border-color: var(--newsletter-cta-border-hover);
   transform: translateY(-1px);
+}
+
+.newsletter-button:active{
+  background: var(--newsletter-cta-bg-pressed);
+  transform: translateY(1px);
+}
+
+.newsletter-button:focus-visible{
+  outline: none;
+  border-color: var(--accent-orange);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--accent-orange) 28%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent-orange) 16%, transparent),
+    var(--newsletter-cta-shadow);
+}
+
+.newsletter-button:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 @media (max-width: 45rem) {
   .newsletter-content {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .newsletter-title{
+    font-size: var(--h-sm);      /* 18px */
+    font-weight: 600;
   }
 
   .newsletter-form {
@@ -1199,56 +1687,48 @@ body.is-locked {
   .newsletter-button {
     width: 100%;
   }
-
-  .newsletter-input:hover{
-  border-color: var(--accent-purple-border);
-  box-shadow: 0 0 0 1px var(--accent-purple-glow);
 }
 
-/* Focus (ya tienes) — solo asegúrate que sea más fuerte que hover */
-.newsletter-input:focus{
-  border-color: var(--color-accent-border);
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
-    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
-}
-
-/* Error / Success por clase en el input */
-.newsletter-input.is-error{
+/* Newsletter input — validation states (global) */
+.newsletter-input.is-error {
   border-color: color-mix(in srgb, var(--danger) 70%, transparent);
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--danger) 22%, transparent),
     0 0 16px color-mix(in srgb, var(--danger) 10%, transparent);
 }
 
-.newsletter-input.is-success{
+.newsletter-input.is-success {
   border-color: color-mix(in srgb, var(--success) 70%, transparent);
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--success) 22%, transparent),
     0 0 16px color-mix(in srgb, var(--success) 10%, transparent);
 }
 
-/* Disabled */
-.newsletter-input:disabled{
+.newsletter-input:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Botón — hover/focus/disabled consistentes */
-.newsletter-button{
-  transition:
-    background var(--dur-1) var(--ease-out),
-    border-color var(--dur-1) var(--ease-out),
-    box-shadow var(--dur-1) var(--ease-out),
-    transform var(--dur-1) var(--ease-out);
+.newsletter-help {
+  margin: var(--size-2) 0 0;
+  font-size: var(--t-sm);
+  line-height: var(--lh-140);
+  min-height: 1.4em;
+  color: var(--color-text-muted);
 }
 
-.newsletter-button:hover{
-  background: color-mix(in srgb, var(--color-accent-subtle) 160%, transparent);
-  transform: translateY(-1px);
+.newsletter-input.is-error ~ .newsletter-help,
+.newsletter-form:has(.newsletter-input.is-error) + .newsletter-help {
+  color: var(--danger);
 }
 
-.newsletter-button:focus-visible{
+.newsletter-input.is-success ~ .newsletter-help,
+.newsletter-form:has(.newsletter-input.is-success) + .newsletter-help {
+  color: var(--success);
+}
+
+/* Newsletter button — focus/active/disabled (global) */
+.newsletter-button:focus-visible {
   outline: none;
   border-color: var(--color-accent);
   box-shadow:
@@ -1256,11 +1736,14 @@ body.is-locked {
     0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
-.newsletter-button:disabled{
+.newsletter-button:active {
+  transform: translateY(1px);
+}
+
+.newsletter-button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
   transform: none;
-}
 }
 
 
@@ -1372,26 +1855,30 @@ body.is-locked {
               0 0 14px color-mix(in srgb, var(--accent-purple-border) 30%, transparent);
   transform: translateY(-2px);
   text-decoration: none;
-  color: #fff;
+  color: var(--color-text);
 }
 
-.social-link:focus{
+.social-link:visited {
+  color: var(--color-text-muted); /* Mantener color original */
+}
+
+.social-link:visited:hover {
+  background: var(--accent-purple-soft);
+  border-color: var(--accent-purple-border);
+  color: var(--color-text); /* Mantener hover morado incluso si visitado */
+}
+
+.social-link:focus-visible {
   outline: none;
   border-color: var(--color-accent);
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
     0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
-    color: var(--color-input-focus);
-}
-
-.social-link:focus svg{
-  stroke: currentColor;
-  fill: currentColor;
-}
-
-.social-link:focus .icon-wrap{
   color: var(--color-input-focus);
-  stroke: currentColor;
+}
+
+.social-link:focus-visible svg {
+  fill: currentColor;
 }
 
 :root[data-theme="light"] .social-link {
@@ -1424,7 +1911,16 @@ body.is-locked {
 }
 
 .footer-links a:hover {
-  color: var(--color-text);
+  color: var(--color-input-focus); /* Morado al hover */
+  text-decoration: none;
+}
+
+.footer-links a:visited {
+  color: var(--color-text-muted); /* Mantener color original después de visitado */
+}
+
+.footer-links a:visited:hover {
+  color: var(--color-input-focus); /* Morado al hover incluso si está visitado */
 }
 
 .footer-links a:active {
@@ -1444,11 +1940,12 @@ body.is-locked {
   width: max-content;
   padding: var(--size-4) var(--size-5);
   border-radius: var(--radius-1);
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--accent-purple-border);
+  background: var(--accent-purple-soft);
   color: var(--color-text);
   font-weight: 800;
   cursor: pointer;
+  box-shadow: 0 0 0 1px var(--accent-purple-glow);
   transition:
     background var(--dur-1) var(--ease-out),
     border-color var(--dur-1) var(--ease-out),
@@ -1457,8 +1954,16 @@ body.is-locked {
 }
 
 .contact-button:hover {
-  background: var(--color-surface-2);
+  background: color-mix(in srgb, var(--accent-purple-soft) 140%, transparent);
+  border-color: var(--color-accent-border);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
   transform: translateY(-1px);
+}
+
+.contact-button:active {
+  transform: translateY(1px);
 }
 
 .contact-button:focus-visible {
@@ -1467,6 +1972,25 @@ body.is-locked {
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
     0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
+}
+
+/* Footer - Contact button: hover morado (no verde) */
+@media (hover:hover) and (pointer:fine){
+  .contact-button:hover{
+    background: var(--accent-purple);
+    color: #fff;
+    border-color: var(--accent-purple-border);
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--accent-purple) 22%, transparent),
+      0 0 18px color-mix(in srgb, var(--accent-purple) 14%, transparent);
+    transform: translateY(-1px);
+  }
+}
+
+.contact-button:active{
+  background: color-mix(in srgb, var(--accent-purple) 85%, #000 15%);
+  border-color: var(--accent-purple-border);
+  color: #fff;
 }
 
 :root[data-theme="light"] .contact-button {
@@ -1491,11 +2015,112 @@ body.is-locked {
 }
 
 :root[data-theme="light"] .footer-bottom{
-  background: var(--copyright-bg-light);
+  background: var(--footer-bottom-bg);
+  color: var(--color-text-muted);
 }
 
 /* ============================================
-   §16  BACK TO TOP
+   §16  GLITCH TEXT EFFECT
+   ============================================
+   Usage:
+   <button class="glitch-text" data-text="Ver más">Ver más</button>
+   - Requires data-text attribute matching the visible text
+   - Glitch plays once on hover via ::after pseudo-element
+   ============================================ */
+.glitch-text {
+  position: relative;
+  overflow: hidden;
+}
+
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  color: inherit;
+  background: transparent;
+  z-index: 1;
+
+  text-shadow:
+    -2px -2px 0 currentColor,
+     2px  2px 0 currentColor;
+
+  /* Glitch slice clip-paths */
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+
+  clip-path: inset(50% 50% 50% 50%);
+}
+
+.glitch-text:hover::after {
+  animation: glitch 0.6s steps(2, end) 1;
+}
+
+@keyframes glitch {
+  0%   { clip-path: var(--slice-1); transform: translate(-4px, -2px); }
+  10%  { clip-path: var(--slice-3); transform: translate(3px, 2px); }
+  20%  { clip-path: var(--slice-1); transform: translate(-2px, 2px); }
+  30%  { clip-path: var(--slice-3); transform: translate(0, 1px); }
+  40%  { clip-path: var(--slice-2); transform: translate(-1px, 0); }
+  50%  { clip-path: var(--slice-3); transform: translate(1px, 0); }
+  60%  { clip-path: var(--slice-4); transform: translate(1px, 2px); }
+  70%  { clip-path: var(--slice-2); transform: translate(-2px, 2px); }
+  80%  { clip-path: var(--slice-5); transform: translate(3px, -2px); }
+  90%  { clip-path: var(--slice-1); transform: translate(-2px, 0); }
+  100% { clip-path: var(--slice-0); transform: translate(0); }
+}
+
+
+/* ============================================
+   §17  GRADIENT GLOW BORDER (Card hover)
+   ============================================
+   Usage:
+   <article class="glow-border">…</article>
+   - Adds a gradient cyan→magenta border on hover
+   - Uses ::before with mask-composite trick
+   - Requires: position:relative, overflow:hidden, isolation:isolate
+   ============================================ */
+.glow-border {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--glow-width);
+  border-radius: inherit;
+  background: linear-gradient(var(--glow-angle), var(--glow-from) 0%, var(--glow-to) 100%);
+
+  /* Mask: only the border shows through */
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.glow-border:hover::before {
+  opacity: 1;
+}
+
+
+/* ============================================
+   §18  BACK TO TOP
    ============================================ */
 .back-to-top {
   position: fixed;
@@ -1504,8 +2129,8 @@ body.is-locked {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--accent-purple-border);
+  background: var(--accent-purple-soft);
   color: var(--color-text);
   cursor: pointer;
   display: inline-flex;
@@ -1514,12 +2139,32 @@ body.is-locked {
   opacity: 0;
   pointer-events: none;
   transform: translateY(6px);
-  transition: opacity var(--dur-2) ease, transform var(--dur-2) ease, background var(--dur-1) var(--ease-out);
+  transition:
+    opacity var(--dur-2) ease,
+    transform var(--dur-2) ease,
+    background var(--dur-1) var(--ease-out),
+    border-color var(--dur-1) var(--ease-out),
+    box-shadow var(--dur-1) var(--ease-out),
+    color var(--dur-1) var(--ease-out);
   z-index: 60;
 }
 
 .back-to-top:hover {
-  background: var(--color-surface-2);
+  background: color-mix(in srgb, var(--accent-purple) 28%, transparent);
+  border-color: var(--accent-purple);
+  box-shadow:
+    0 0 0 1px var(--accent-purple-glow),
+    0 0 14px color-mix(in srgb, var(--accent-purple) 20%, transparent);
+  color: var(--color-text);
+  transform: translateY(-2px);
+}
+
+.back-to-top:focus-visible {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--color-accent) 18%, transparent),
+    0 0 18px color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .back-to-top.show {
@@ -1529,5 +2174,21 @@ body.is-locked {
 }
 
 :root[data-theme="light"] .back-to-top {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--color-accent-subtle);
+  border-color: var(--color-accent-border);
+  color: var(--color-accent);
 }
+
+/* ============================================
+   OCULTAR FAVORITOS E INICIAR SESIÓN EN MOBILE
+   Ya están en el menú hamburguesa
+   ============================================ */
+@media (max-width: 768px) {
+    /* Ocultar botones que están en menú hamburguesa */
+    .header-actions .icon-button[aria-label="Iniciar sesión"],
+    .header-actions .icon-button[aria-label="Mi cuenta"],
+    .header-actions .icon-button[aria-label="Favoritos"] {
+        display: none !important;
+    }
+}
+
