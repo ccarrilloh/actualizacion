@@ -1,0 +1,687 @@
+html, body{ background: #000;; }
+html, body{ overflow-x: hidden; }
+:root[data-theme="light"] body { background: var(--color-bg); }
+
+/* ============================================
+   HOME PAGE - GLITCHED BOX
+   Usando tokens de gb-core.css
+   ============================================ */
+
+/* ============================================
+   BARRA SUPERIOR (sin breadcrumbs, solo controles)
+   ============================================ */
+.top-bar{
+  position: sticky;
+  top: var(--header-h);
+  z-index: 40;
+  background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--color-border);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.top-bar__content{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--size-3);
+  padding: var(--size-2) 0;
+}
+
+/* ============================================
+   HERO — Fullscreen + full-bleed (bg + character)
+   Texto centrado debajo del character (SIN fondo)
+   ============================================ */
+
+/* Ajustes finos (toca SOLO estas variables) */
+/* Ajustes finos (toca SOLO estas variables) */
+:root{
+  /* el texto “sale” un poco del hero hacia abajo (para el look de tu referencia) */
+  --hero-overhang: 140px;
+
+  /* gap extra entre hero y la siguiente sección (solo tokens) */
+  --hero-gap: var(--size-11);
+
+  /* gutter lateral alineado al .layout__container (navbar) */
+  --hero-gutter: var(--size-6);
+
+  /* tipografía para descripciones de secciones (lead) */
+  --t-section-desc: var(--h-xs);
+
+  /* character */
+  --hero-character-bottom: -155px;             /* baja/sube el personaje */
+  --hero-character-width: min(920px, 78vw);   /* tamaño base */
+  --hero-character-scale: 1.70;               /* “zoom” del PNG */
+  --hero-float-amount: 14px;                  /* flotación */
+
+  /* ancho máximo del bloque de texto */
+  --hero-content-max: 760px;
+
+  /* tipografías (tokens gb-core) */
+  --t-hero-title: var(--h-xl);                /* 44px */
+  --t-hero-desc: var(--h-xs);                 /* 16px */
+}
+
+/* Gutter del hero sincronizado con .layout__container */
+@media (min-width: 46.5rem){
+  :root{ --hero-gutter: var(--size-9); }
+}
+@media (min-width: 64rem){
+  :root{ --hero-gutter: 5rem; }
+}
+
+
+/* Full-bleed: llega a los bordes del viewport aunque haya contenedores */
+.hero{
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  padding: 0;
+
+  /* reserva espacio para el “overhang” del texto y que NO choque con la sección de abajo */
+  padding-bottom: calc(var(--hero-overhang) + var(--hero-gap));
+}
+
+.hero__frame{
+  position: relative;
+  min-height: 100svh;
+  overflow: visible; /* deja que el texto salga abajo */
+}
+
+/* Fondo */
+.hero__bg{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+  opacity: 0.98;
+  filter: saturate(1.05) contrast(1.02);
+  z-index: 0;
+}
+
+/* Personaje */
+.hero__character{
+  position: absolute;
+  left: 50%;
+  bottom: var(--hero-character-bottom);
+  width: var(--hero-character-width);
+  height: auto;
+  max-height: 92%;
+  transform: translateX(-50%) scale(var(--hero-character-scale));
+  transform-origin: 50% 90%;
+  filter: drop-shadow(0 16px 34px rgba(0, 0, 0, 0.55));
+  pointer-events: none;
+  z-index: 2;
+  animation: heroFloat 5.5s ease-in-out infinite;
+}
+
+@keyframes heroFloat{
+  0%, 100% { transform: translateX(-50%) translateY(0) scale(var(--hero-character-scale)); }
+  50%      { transform: translateX(-50%) translateY(calc(var(--hero-float-amount) * -1)) scale(var(--hero-character-scale)); }
+}
+
+/* Bloque de texto (centrado debajo del personaje) */
+
+.hero__content{
+  position: absolute;
+  left: var(--hero-gutter);
+  right: var(--hero-gutter);
+  bottom: calc(var(--hero-overhang) * -1);
+  z-index: 5;
+
+  /* Alineación con el gutter del sitio (igual que navbar/container) */
+  max-width: var(--hero-content-max);
+  margin-inline: auto;
+  width: auto;
+  text-align: center;
+
+  /* sin caja */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
+
+  /* legibilidad */
+  text-shadow: 0 2px 16px rgba(0,0,0,0.65);
+  pointer-events: auto;
+}
+
+.hero__title{
+  margin: 0 0 var(--size-4);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: clamp(var(--h-lg), 5vw, var(--t-hero-title));
+  line-height: var(--lh-110);
+  color: var(--color-text);
+}
+
+.hero__description{
+  margin: 0 0 var(--size-7);
+  color: var(--color-text-secondary);
+  font-size: var(--t-hero-desc);
+  line-height: var(--lh-160);
+}
+
+.hero__actions{
+  display: flex;
+  gap: var(--size-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ============================================
+   BUTTONS (usando estilo gb-core)
+   ============================================ */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-2);
+  padding: var(--size-4) var(--size-6);
+  border-radius: var(--radius-2);
+  border: 2px solid var(--color-border-strong);
+  text-decoration: none;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.04);
+  transition: all var(--transition-fast);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: var(--t-rg);
+}
+
+.btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.btn--primary{
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  color: #fff;
+}
+
+.btn--primary:hover{
+  background: color-mix(in srgb, var(--accent-purple) 85%, white);
+  border-color: var(--accent-purple);
+}
+
+.btn--ghost{
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.btn--ghost:hover{
+  background: rgba(0, 0, 0, 0.35);
+}
+
+/* ============================================
+   SECTIONS
+   ============================================ */
+.section{
+  padding: var(--size-11) 0; /* 64px vertical */
+}
+
+/* Espaciado extra entre productos y benefits */
+.section--muted{
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 255, 255, 0.02),
+    transparent
+  );
+  padding-top: calc(var(--size-11) + var(--size-9)); /* 64px + 48px = 112px */
+  padding-bottom: var(--size-11); /* 64px abajo también */
+  margin-bottom: var(--size-10); /* 56px extra de separación con FAQ */
+}
+
+.section__head{
+  margin-bottom: var(--size-9); /* 48px */
+  text-align: center;
+}
+
+/* Variante: header de sección alineado a la izquierda (solo donde se use) */
+.section__head--left{
+  text-align: left;
+}
+
+.section__head--left .section__desc{
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.section__title{
+  margin: 0 0 var(--size-3);
+  font-size: clamp(1.5rem, 3vw, 2.25rem); /* 24-36px */
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.section__desc{
+  margin: 0;
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: var(--t-section-desc);
+  line-height: var(--lh-160);
+}
+
+@media (max-width: 520px){
+  :root{ --t-section-desc: var(--t-rg); } /* 14px mobile para que no se vea enorme */
+}
+
+/* ============================================
+   PRODUCTS GRID
+   ============================================ */
+/* ============================================
+   PRODUCTS GRID
+   ============================================ */
+.products-grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--size-6); /* 24px */
+}
+
+/* ============================================
+   PRODUCT CARD
+   ============================================ */
+.product-card{
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-3);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden; /* Importante para contener todo */
+}
+
+.product-card:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-1);
+}
+
+/* Borde degradado en hover */
+.product-card::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-3);
+  padding: 2px;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-green));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.product-card:hover::before{
+  opacity: 1;
+}
+
+/* Card Media (Imagen) */
+.product-card__media{
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.product-card__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-card:hover .product-card__media img{
+  transform: scale(1.05);
+}
+
+/* Card Body */
+.product-card__body{
+  padding: var(--size-6); /* 24px */
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-2); /* 6px */
+}
+
+.product-card__title{
+  margin: 0;
+  font-size: var(--h-sm);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.product-card__price-section{
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-1); /* 4px */
+  margin-bottom: var(--size-2); /* 6px */
+}
+
+.product-card__price{
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent-purple);
+  font-size: var(--h-sm);
+  margin: 0;
+}
+
+.product-card__availability{
+  margin: 0;
+  font-size: var(--t-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.btn--full{
+  width: 100%;
+  margin-top: var(--size-5);
+}
+
+/* ============================================
+   BENEFITS / FEATURES
+   ============================================ */
+.benefits{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--size-6);
+}
+
+.benefit{
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-3);
+  padding: var(--size-7); /* 32px - más espacioso */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  text-align: center; /* Centrar todo el contenido */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar horizontalmente */
+}
+
+/* Hover effect estilo Webflow con lift */
+.benefit:hover{
+  transform: translateY(-8px); /* Lift más pronunciado */
+  box-shadow: 0 12px 32px rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.5);
+}
+
+.benefit__icon{
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--size-5); /* 16px */
+  padding: var(--size-4); /* 12px */
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: var(--radius-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0; /* No reducir tamaño del icono */
+}
+
+.benefit:hover .benefit__icon{
+  background: rgba(139, 92, 246, 0.15);
+  transform: scale(1.1); /* Zoom más notorio */
+}
+
+.benefit__icon svg{
+  color: var(--accent-purple);
+  width: 100%;
+  height: 100%;
+}
+
+.benefit__title{
+  margin: 0 0 var(--size-3); /* 8px */
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.benefit__desc{
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: var(--t-sm);
+}
+
+/* ============================================
+   FAQ ACCORDION
+   ============================================ */
+.faq{
+  border-radius: var(--radius-3);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq__item{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-6);
+  padding: var(--size-6);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  border-bottom: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
+}
+
+.faq__item:last-of-type{ border-bottom: none; }
+
+.faq__item:hover{ background: rgba(255, 255, 255, 0.04); }
+
+.faq__item[aria-expanded="true"]{ background: rgba(139, 92, 246, 0.08); }
+
+.faq__q{
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-size: var(--t-rg);
+}
+
+.faq__icon{
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.22);
+  flex: 0 0 auto;
+  font-size: 20px;
+  font-weight: 300;
+  transition: all var(--transition-fast);
+}
+
+.faq__item[aria-expanded="true"] .faq__icon{
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  color: white;
+}
+
+.faq__panel{
+  padding: 0 var(--size-6) var(--size-6);
+  color: var(--color-text-secondary);
+  display: none;
+}
+
+.faq__panel p{
+  margin: 0;
+  line-height: var(--lh-150);
+  font-size: var(--t-rg);
+}
+
+/* ============================================
+   SCROLL ANIMATIONS
+   ============================================ */
+.animate-on-scroll{
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger para cards */
+.product-card:nth-child(1).is-visible { transition-delay: 0.1s; }
+.product-card:nth-child(2).is-visible { transition-delay: 0.2s; }
+.product-card:nth-child(3).is-visible { transition-delay: 0.3s; }
+.product-card:nth-child(4).is-visible { transition-delay: 0.4s; }
+.product-card:nth-child(5).is-visible { transition-delay: 0.1s; }
+.product-card:nth-child(6).is-visible { transition-delay: 0.2s; }
+.product-card:nth-child(7).is-visible { transition-delay: 0.3s; }
+.product-card:nth-child(8).is-visible { transition-delay: 0.4s; }
+
+/* Stagger para benefits */
+.benefit:nth-child(1).is-visible { transition-delay: 0.1s; }
+.benefit:nth-child(2).is-visible { transition-delay: 0.2s; }
+.benefit:nth-child(3).is-visible { transition-delay: 0.3s; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (max-width: 1100px){
+  .products-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 860px){
+  :root{
+    --hero-overhang: 92px;
+    --hero-gap: var(--size-9);
+    --hero-character-width: min(860px, 92vw);
+    --hero-character-scale: 1.18;
+    --hero-character-bottom: 42px;
+    --t-hero-desc: var(--t-rg);
+  }
+
+  .products-grid{ grid-template-columns: repeat(2, 1fr); }
+  .benefits{ grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 520px){
+  :root{
+    --hero-overhang: 72px;
+    --hero-gap: var(--size-8);
+    --hero-character-width: min(780px, 96vw);
+    --hero-character-scale: 1.12;
+    --hero-character-bottom: 28px;
+    --t-hero-desc: var(--t-rg);
+    --t-section-desc: var(--t-rg);
+  }
+
+  .btn{ width: 100%; }
+  .hero__actions{ width: 100%; }
+  .products-grid{ grid-template-columns: 1fr; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .hero__character{ animation: none; }
+  .animate-on-scroll,
+  .product-card,
+  .benefit{
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+
+/* ============================================
+   HOME CARDS — Hover pro + Outline + Zoom + Glitch-text (core)
+   ============================================ */
+
+/* Card hover: lift + shadow (más marcado) */
+.product-card{
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base), background var(--transition-base);
+}
+
+.product-card:hover{
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-1);
+  border-color: var(--accent-purple);
+}
+
+/* Outline glow (igual al gb-core: --glow-from/--glow-to/--glow-angle/--glow-width) */
+.product-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  padding: var(--glow-width);
+  border-radius: inherit;
+  background: linear-gradient(var(--glow-angle), var(--glow-from) 0%, var(--glow-to) 100%);
+
+  /* Mask: only border visible */
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity var(--transition-base);
+  pointer-events:none;
+  z-index: 2;
+}
+.product-card:hover::before{ opacity: 1; }
+
+.product-card__media,
+.product-card__body{ position: relative; z-index: 1; }
+
+/* Botón "Ver más": hover morado (botón) + glitch SOLO en texto (glitch-text de gb-core.css) */
+.product-card .btn{
+  width: 100%;
+}
+
+/* El botón cambia, pero NO se anima con transform extra (deja el glitch al texto) */
+.product-card .btn:hover{
+  transform: none;
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+  color: #fff;
+}
+
+/* El texto ocupa el área del botón para que el overlay del glitch-text quede perfecto */
+.product-card .btn__text.glitch-text{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+/* Si prefieres que el glitch se dispare al hover del botón (no solo del texto) */
+.product-card .btn:hover .btn__text.glitch-text::after{
+  animation: glitch 0.6s steps(2, end) 1;
+}
+/* ============================================
+   HERO BG - LIGHT MODE
+   ============================================ */
+.hero__bg--light { display: none; }
+:root[data-theme="light"] .hero__bg--dark  { display: none; }
+:root[data-theme="light"] .hero__bg--light { display: block; }

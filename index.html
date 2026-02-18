@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html data-theme="dark" lang="es">
+<html lang="es" data-theme="dark">
 <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <title>Glitched Box — Starter</title>
-
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
-
-  <link rel="stylesheet" href="gb-core.css">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glitched Box - Art Toys Coleccionables</title>
+    <link rel="stylesheet" href="gb-core.css">
+    <link rel="stylesheet" href="home.css">
 </head>
-
 <body>
-
-  <!-- Header / Navigation -->
+  <!-- HEADER (de gb-core) -->
   <header class="header">
     <div class="layout__container">
       <div class="header-content">
+
+        <!-- Hamburger Menu Toggle (mobile only) -->
+        <button class="hamburger-toggle" id="hamburgerToggle" aria-label="Abrir menú de navegación" type="button">
+          <span class="hamburger-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
 
         <!-- Logo -->
         <div class="logo">
@@ -36,6 +38,27 @@
           </a>
         </div>
 
+        <!-- Navegación Primaria -->
+        <nav class="primary-nav" aria-label="Navegación principal">
+          <button aria-label="Tienda" class="icon-button" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 3V1H18V3H2ZM2 19V10H1V7.5L2 2H18L19 7.5V10H18V19H15V10H10V19H2ZM4 17H8V12H4V17ZM3 8H17L16.5 4H3.5L3 8Z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span>Tienda</span>
+          </button>
+
+          <button aria-label="Colecciones" class="icon-button" type="button">
+            <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+              <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 1H9V9H1V1ZM11 1H19V9H11V1ZM1 11H9V19H1V11ZM11 11H19V19H11V11Z" fill="currentColor"/>
+              </svg>
+            </span>
+            <span>Colecciones</span>
+          </button>
+        </nav>
+                
         <!-- Search Bar (desktop/tablet) -->
         <div class="header-search">
           <div class="search-container">
@@ -62,10 +85,10 @@
             </span>
             <span>Buscar</span>
           </button>
-
+          
           <button aria-label="Iniciar sesión" class="icon-button" type="button">
             <span aria-hidden="true" class="icon-wrap icon-wrap--24">
-              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.66667 12.5 0 14.175 0 17.5V20H20V17.5C20 14.175 13.3333 12.5 10 12.5Z" fill="currentColor"></path>
               </svg>
             </span>
@@ -74,7 +97,7 @@
 
           <button aria-label="Favoritos" class="icon-button" type="button">
             <span aria-hidden="true" class="icon-wrap icon-wrap--24">
-              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10 18.35L8.55 17.03C3.4 12.36 0 9.27 0 5.5C0 2.41 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.08C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.41 20 5.5C20 9.27 16.6 12.36 11.45 17.03L10 18.35Z" fill="currentColor"></path>
               </svg>
             </span>
@@ -83,7 +106,7 @@
 
           <button aria-label="Carrito" class="icon-button cart-button" type="button">
             <span aria-hidden="true" class="icon-wrap icon-wrap--24">
-              <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
                 <path d="M6 16C4.9 16 4.01 16.9 4.01 18C4.01 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 14.1 4.9 15 6 15H18V13H6.42C6.28 13 6.17 12.89 6.17 12.75L6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.48C19.96 3.34 20 3.17 20 3C20 2.45 19.55 2 19 2H4.21L3.27 0H0ZM16 16C14.9 16 14.01 16.9 14.01 18C14.01 19.1 14.9 20 16 20C17.1 20 18 19.1 18 18C18 16.9 17.1 16 16 16Z" fill="currentColor"></path>
               </svg>
             </span>
@@ -96,51 +119,62 @@
     </div>
   </header>
 
-  <!-- Breadcrumbs -->
-  <div class="breadcrumbs-bar">
-    <div class="layout__container breadcrumbs-bar__inner">
-      <nav aria-label="Breadcrumb" class="breadcrumbs">
-        <a class="breadcrumb-link" href="index.html">Inicio</a>
-        <span class="breadcrumb-sep">›</span>
-        <a class="breadcrumb-link" href="#">Colecciones</a>
-        <span class="breadcrumb-sep">›</span>
-        <span class="breadcrumb-current" aria-current="page">Gallinitas</span>
-      </nav>
-
-      <!-- Theme Switch -->
-<label class="theme-switch" aria-label="Cambiar tema">
-  <input id="themeToggle" type="checkbox" class="theme-switch__checkbox" data-theme-toggle>
-  <div class="theme-switch__container" aria-hidden="true">
-    <div class="theme-switch__clouds"></div>
-    <div class="theme-switch__stars-container">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none" aria-hidden="true">
-  <path fill-rule="evenodd" clip-rule="evenodd"
-    d="M135.8 3c-.8.9-1.7 1.3-2.8 1.4 1.1.1 2 .5 2.8 1.4.8.9 1.2 1.9 1.2 3.1 0-.8.2-1.5.5-2.1.4-.7.9-1.2 1.5-1.6.6-.4 1.3-.6 2.1-.6-1.1-.1-2.1-.5-2.9-1.4C137.4 2.2 137 1.2 137 0c0 1.2-.4 2.2-1.2 3ZM31 23.4c1.1-.1 2-.5 2.8-1.4.8-.9 1.2-1.8 1.2-3 0 1.2.4 2.1 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1.9-1.5 1.6-.4.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3.1-.8-.9-1.7-1.3-2.8-1.4Z"
-    fill="currentColor"/>
-</svg>
-    </div>
-    <div class="theme-switch__circle-container">
-      <div class="theme-switch__sun-moon-container">
-        <div class="theme-switch__moon">
-          <div class="theme-switch__spot"></div>
-          <div class="theme-switch__spot"></div>
-          <div class="theme-switch__spot"></div>
+  <!-- BARRA SUPERIOR (Sin breadcrumbs, solo controles a la derecha) -->
+  <div class="top-bar">
+    <div class="layout__container">
+      <div class="top-bar__content">
+        <!-- Language Selector -->
+        <div class="language-selector" id="languageSelector">
+          <button class="language-toggle" id="languageToggle" aria-label="Cambiar idioma" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H9.578a18.87 18.87 0 01-1.724 4.78c.29.354.596.696.914 1.026a1 1 0 11-1.44 1.389c-.188-.196-.373-.396-.554-.6a19.098 19.098 0 01-3.107 3.567 1 1 0 01-1.334-1.49 17.087 17.087 0 003.13-3.733 18.992 18.992 0 01-1.487-2.494 1 1 0 111.79-.89c.234.47.489.928.764 1.372.417-.934.752-1.913.997-2.927H3a1 1 0 110-2h3V3a1 1 0 011-1zm6 6a1 1 0 01.894.553l2.991 5.982a.869.869 0 01.02.037l.99 1.98a1 1 0 11-1.79.895L15.383 16h-4.764l-.724 1.447a1 1 0 11-1.788-.894l.99-1.98.019-.038 2.99-5.982A1 1 0 0113 8zm-1.382 6h2.764L13 11.236 11.618 14z" clip-rule="evenodd"/>
+            </svg>
+            <span id="currentLang">ES</span>
+            <svg class="language-toggle-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+          <div class="language-dropdown" role="menu">
+            <button class="language-option active" data-lang="es" role="menuitem">
+              🇲🇽 Español
+            </button>
+            <button class="language-option" data-lang="en" role="menuitem">
+              🇺🇸 English
+            </button>
+          </div>
         </div>
+
+        <!-- Theme Switch -->
+        <label class="theme-switch" aria-label="Cambiar tema">
+          <input id="themeToggle" type="checkbox" class="theme-switch__checkbox" data-theme-toggle aria-label="Cambiar tema claro/oscuro">
+          <div class="theme-switch__container" aria-hidden="true">
+            <div class="theme-switch__clouds"></div>
+            <div class="theme-switch__stars-container">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none" aria-hidden="true">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M135.8 3c-.8.9-1.7 1.3-2.8 1.4 1.1.1 2 .5 2.8 1.4.8.9 1.2 1.9 1.2 3.1 0-.8.2-1.5.5-2.1.4-.7.9-1.2 1.5-1.6.6-.4 1.3-.6 2.1-.6-1.1-.1-2.1-.5-2.9-1.4C137.4 2.2 137 1.2 137 0c0 1.2-.4 2.2-1.2 3ZM31 23.4c1.1-.1 2-.5 2.8-1.4.8-.9 1.2-1.8 1.2-3 0 1.2.4 2.1 1.2 3 .8.9 1.7 1.3 2.8 1.4-.7 0-1.4.2-2 .6-.6.4-1.1.9-1.5 1.6-.4.7-.5 1.4-.5 2.1 0-1.2-.4-2.2-1.2-3.1-.8-.9-1.7-1.3-2.8-1.4Z" fill="currentColor"/>
+              </svg>
+            </div>
+            <div class="theme-switch__circle-container">
+              <div class="theme-switch__sun-moon-container">
+                <div class="theme-switch__moon">
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                  <div class="theme-switch__spot"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </label>
       </div>
-    </div>
-  </div>
-</label>
     </div>
   </div>
 
   <!-- Search Overlay (mobile) -->
   <div aria-hidden="true" class="search-overlay" id="searchOverlay">
     <div class="search-overlay__backdrop" data-search-close=""></div>
-
     <div aria-label="Buscar productos" aria-modal="true" class="search-overlay__panel" role="dialog">
       <div class="search-overlay__header">
         <strong class="search-overlay__title">Buscar</strong>
-
         <button aria-label="Cerrar búsqueda" class="icon-button search-overlay__close" data-search-close="" type="button">
           <span aria-hidden="true" class="icon-wrap icon-wrap--20">
             <svg aria-hidden="true" fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -150,7 +184,6 @@
           </span>
         </button>
       </div>
-
       <div class="search-container">
         <span aria-hidden="true" class="icon-wrap icon-wrap--24 search-icon">
           <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -163,29 +196,420 @@
     </div>
   </div>
 
-  <main class="layout__container l-section l-stack">
-    <div class="l-stack">
-      <h1 class="type__h1">UI Playground</h1>
-      <p class="type__body type__muted">Aquí probamos tokens y componentes antes de construir páginas.</p>
-    </div>
-
-    <section aria-label="Cards" class="l-stack">
-      <h2 class="type__h2">Cards</h2>
-      <div class="grid grid--products">
-        <article class="card card--product">
-          <h3 class="type__h3">Product Card</h3>
-          <p class="type__body type__muted">Card estándar para listados (1 fila en mobile).</p>
-        </article>
-
-        <article class="card card--featured">
-          <h3 class="type__h3">Featured Card</h3>
-          <p class="type__body type__muted">Variante para destacados / promos.</p>
-        </article>
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <div class="mobile-menu__backdrop" data-menu-close=""></div>
+    
+    <div class="mobile-menu__panel">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__title">Menú</span>
+        <button class="mobile-menu__close" data-menu-close="" aria-label="Cerrar menú" type="button">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 4L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
-    </section>
+
+      <nav class="mobile-menu__nav" aria-label="Navegación móvil">
+        
+        <!-- 1. TIENDA -->
+        <a href="tienda.html" class="mobile-menu__link">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 3V1H18V3H2ZM2 19V10H1V7.5L2 2H18L19 7.5V10H18V19H15V10H10V19H2ZM4 17H8V12H4V17ZM3 8H17L16.5 4H3.5L3 8Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Tienda</span>
+        </a>
+
+        <!-- 2. COLECCIONES -->
+        <a href="colecciones.html" class="mobile-menu__link">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0H8V8H0V0ZM10 0H18V8H10V0ZM0 10H8V18H0V10ZM10 10H18V18H10V10ZM2 2V6H6V2H2ZM12 2V6H16V2H12ZM2 12V16H6V12H2ZM12 12V16H16V12H12Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Colecciones</span>
+        </a>
+
+        <!-- 3. FAVORITOS -->
+        <a href="favoritos.html" class="mobile-menu__link">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 18.35L8.55 17.03C3.4 12.36 0 9.27 0 5.5C0 2.41 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.08C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.41 20 5.5C20 9.27 16.6 12.36 11.45 17.03L10 18.35Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Favoritos</span>
+        </a>
+
+        <!-- 4. INICIAR SESIÓN / MI CUENTA -->
+        <a href="login.html" class="mobile-menu__link">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.66667 12.5 0 14.175 0 17.5V20H20V17.5C20 14.175 13.3333 12.5 10 12.5Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Iniciar sesión</span>
+        </a>
+
+        <!-- SEPARADOR -->
+        <div class="mobile-menu__separator"></div>
+
+        <!-- 5. IDIOMA -->
+        <button class="mobile-menu__link" id="mobileLangToggle" type="button">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM17 10C17 10.58 16.95 11.14 16.85 11.69L14 10.5V9.5C14 8.67 13.33 8 12.5 8H11V6C11 5.45 10.55 5 10 5H8V3H10C10.55 3 11 2.55 11 2V1.14C14.41 1.67 17 4.53 17 8V10ZM3 10C3 7.81 3.96 5.87 5.46 4.54L7 6.08V7C7 8.1 7.9 9 9 9V11.08C6.39 11.56 4.34 13.65 4 16.28C3.36 14.99 3 13.55 3 12V10Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Idioma: <span id="mobileLangDisplay">Español</span></span>
+        </button>
+
+        <!-- 6. TEMA -->
+        <button class="mobile-menu__link mobile-menu__link--theme" id="mobileThemeToggle" type="button">
+          <span aria-hidden="true" class="icon-wrap icon-wrap--24">
+            <svg aria-hidden="true" fill="currentColor" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg" id="mobileThemeIcon">
+              <path class="theme-icon-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>Tema: <span id="mobileThemeDisplay">Oscuro</span></span>
+        </button>
+
+      </nav>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+    <div class="layout__container">
+
+      <!-- HERO SECTION -->
+      <section class="hero">
+        <div class="hero__frame">
+          <img src="images/hero_image_bg.webp" alt="" class="hero__bg hero__bg--dark" />
+          <img src="images/hero_image_light.webp" alt="" class="hero__bg hero__bg--light" />
+          <img src="images/hero_image_character.webp" alt="Kitsune Guardian" class="hero__character" />
+          
+          <div class="hero__content">
+            <h1 class="hero__title">Descubre la colección completa</h1>
+            <p class="hero__description">
+              El Kitsune se ha fragmentado en tres formas: Rojo, Azul y Morado. Cada uno con su propia energía... y su propia historia. Explora la colección completa y elige tu Kitsune.
+            </p>
+            <div class="hero__actions">
+              <a href="colecciones.html" class="btn btn--primary">
+                Ver colección
+              </a>
+              <button class="btn btn--ghost">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M6 16C4.9 16 4.01 16.9 4.01 18C4.01 19.1 4.9 20 6 20C7.1 20 8 19.1 8 18C8 16.9 7.1 16 6 16ZM0 0V2H2L5.6 9.59L4.24 12.04C4.09 12.32 4 12.65 4 13C4 14.1 4.9 15 6 15H18V13H6.42C6.28 13 6.17 12.89 6.17 12.75L6.2 12.63L7.1 11H14.55C15.3 11 15.96 10.58 16.3 9.97L19.88 3.48C19.96 3.34 20 3.17 20 3C20 2.45 19.55 2 19 2H4.21L3.27 0H0ZM16 16C14.9 16 14.01 16.9 14.01 18C14.01 19.1 14.9 20 16 20C17.1 20 18 19.1 18 18C18 16.9 17.1 16 16 16Z" fill="currentColor"/>
+                </svg>
+                Agregar al carrito
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTOS DESTACADOS -->
+      <section class="section">
+        <div class="section__head section__head--left animate-on-scroll">
+          <h2 class="section__title">Echa un vistazo a otras colecciones</h2>
+          <p class="section__desc">
+            Descubre nuevas criaturas que no pueden faltar en tu colección, cada una con su propio estilo y misterio.
+          </p>
+        </div>
+
+        <div class="products-grid">
+          <!-- Producto 1 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/kitsune_fantasma_card.webp" alt="Kitsune Fantasma" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Kitsune</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$450 MXN</span>
+                <p class="product-card__availability">Disponible en varios colores</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 2 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/nahual_card.webp" alt="Nahual" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Nahual</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$900 MXN</span>
+                <p class="product-card__availability">Edición única</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 3 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/arco_torii_rojo_card.webp" alt="Arco Torii Rojo" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Arco Torii</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$650 MXN</span>
+                <p class="product-card__availability">Disponible en varios colores</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 4 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/dr_plaga_card.webp" alt="Dr. Plaga" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Doctor Plaga</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$950 MXN</span>
+                <p class="product-card__availability">Edición única</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 5 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/hamster_card.webp" alt="Hamster" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Hamster</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$950 MXN</span>
+                <p class="product-card__availability">Edición única</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 6 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/jackalope_amarillo_card.webp" alt="Jackalope" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Jackalope</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$800 MXN</span>
+                <p class="product-card__availability">Disponible en varios colores</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 7 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/gallinitas_mágicas_blanco_card.webp" alt="Gallinita Mágica" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Gallinitas Mágicas</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$150 MXN</span>
+                <p class="product-card__availability">Disponible en varios colores</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Producto 8 -->
+          <article class="product-card animate-on-scroll">
+            <a href="#" class="product-card__media">
+              <img src="images/reaper_halloween_card_300x300.webp" alt="Reaper" />
+            </a>
+            <div class="product-card__body">
+              <h3 class="product-card__title">Reaper</h3>
+              <div class="product-card__price-section">
+                <span class="product-card__price">$1,200 MXN</span>
+                <p class="product-card__availability">Disponible en varios colores</p>
+              </div>
+              <button class="btn btn--sm btn--full">
+                <span class="btn__text glitch-text" data-text="Ver más">Ver más</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- BENEFITS / FEATURES -->
+      <section class="section section--muted">
+        <div class="section__head animate-on-scroll">
+          <h2 class="section__title">Envío y pago sin complicaciones</h2>
+          <p class="section__desc">
+            Desde que eliges tu Art Toy hasta que lo recibes, nos encargamos de que todo sea seguro, rápido y emocionante.
+          </p>
+        </div>
+
+        <div class="benefits">
+          <!-- Benefit 1: Empaque seguro -->
+          <div class="benefit animate-on-scroll">
+            <svg class="benefit__icon" viewBox="0 0 32 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30.72 7.61111L17.1815 0.300713C16.8198 0.103465 16.4133 0 16 0C15.5867 0 15.1802 0.103465 14.8185 0.300713L1.28 7.61415C0.893367 7.82291 0.570621 8.13029 0.345464 8.50419C0.120308 8.87808 0.0010004 9.30477 0 9.7397V24.2603C0.0010004 24.6952 0.120308 25.1219 0.345464 25.4958C0.570621 25.8697 0.893367 26.1771 1.28 26.3859L14.8185 33.6993C15.1802 33.8965 15.5867 34 16 34C16.4133 34 16.8198 33.8965 17.1815 33.6993L30.72 26.3859C31.1066 26.1771 31.4294 25.8697 31.6545 25.4958C31.8797 25.1219 31.999 24.6952 32 24.2603V9.74122C31.9998 9.30552 31.8809 8.87787 31.6557 8.50311C31.4305 8.12834 31.1073 7.82025 30.72 7.61111ZM16 2.42627L28.3615 9.10659L23.78 11.5798L11.4185 4.89951L16 2.42627ZM16 15.7869L3.63846 9.10659L8.85538 6.28719L21.2169 12.9675L16 15.7869ZM29.5385 24.2664L17.2308 30.9148V17.8867L22.1538 15.2282V20.6453C22.1538 20.9675 22.2835 21.2764 22.5143 21.5042C22.7451 21.732 23.0582 21.8599 23.3846 21.8599C23.711 21.8599 24.0241 21.732 24.2549 21.5042C24.4857 21.2764 24.6154 20.9675 24.6154 20.6453V13.8982L29.5385 11.2397V24.2603V24.2664Z" fill="currentColor"/>
+            </svg>
+            <h3 class="benefit__title">Empaque seguro</h3>
+            <p class="benefit__desc">
+              Tus art toys viajan protegidos en cajas diseñadas con estilo.
+            </p>
+          </div>
+
+          <!-- Benefit 2: Envío a todo México -->
+          <div class="benefit animate-on-scroll">
+            <svg class="benefit__icon" viewBox="0 0 36 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.18182 27C6.81818 27 5.65909 26.5078 4.70455 25.5234C3.75 24.5391 3.27273 23.3437 3.27273 21.9375H1.63636C1.17273 21.9375 0.784364 21.7755 0.471273 21.4515C0.158182 21.1275 0.00109091 20.727 0 20.25V3.375C0 2.44687 0.320727 1.65262 0.962182 0.99225C1.60364 0.331875 2.37382 0.001125 3.27273 0H22.9091C23.8091 0 24.5798 0.33075 25.2213 0.99225C25.8627 1.65375 26.1829 2.448 26.1818 3.375V6.75H29.4545C29.9727 6.75 30.4636 6.86981 30.9273 7.10944C31.3909 7.34906 31.7727 7.67925 32.0727 8.1L35.6727 13.0359C35.7818 13.1766 35.8636 13.3312 35.9182 13.5C35.9727 13.6688 36 13.8516 36 14.0484V20.25C36 20.7281 35.8429 21.1292 35.5287 21.4532C35.2145 21.7772 34.8262 21.9386 34.3636 21.9375H32.7273C32.7273 23.3437 32.25 24.5391 31.2955 25.5234C30.3409 26.5078 29.1818 27 27.8182 27C26.4545 27 25.2955 26.5078 24.3409 25.5234C23.3864 24.5391 22.9091 23.3437 22.9091 21.9375H13.0909C13.0909 23.3437 12.6136 24.5391 11.6591 25.5234C10.7045 26.5078 9.54545 27 8.18182 27ZM8.18182 23.625C8.64545 23.625 9.03436 23.463 9.34855 23.139C9.66273 22.815 9.81927 22.4145 9.81818 21.9375C9.81709 21.4605 9.66 21.06 9.34691 20.736C9.03382 20.412 8.64545 20.25 8.18182 20.25C7.71818 20.25 7.32982 20.412 7.01673 20.736C6.70364 21.06 6.54655 21.4605 6.54545 21.9375C6.54436 22.4145 6.70145 22.8156 7.01673 23.1407C7.332 23.4658 7.72036 23.6272 8.18182 23.625ZM27.8182 23.625C28.2818 23.625 28.6707 23.463 28.9849 23.139C29.2991 22.815 29.4556 22.4145 29.4545 21.9375C29.4535 21.4605 29.2964 21.06 28.9833 20.736C28.6702 20.412 28.2818 20.25 27.8182 20.25C27.3545 20.25 26.9662 20.412 26.6531 20.736C26.34 21.06 26.1829 21.4605 26.1818 21.9375C26.1807 22.4145 26.3378 22.8156 26.6531 23.1407C26.9684 23.4658 27.3567 23.6272 27.8182 23.625ZM26.1818 15.1875H33.1364L29.4545 10.125H26.1818V15.1875Z" fill="currentColor"/>
+            </svg>
+            <h3 class="benefit__title">Envío a todo México</h3>
+            <p class="benefit__desc">
+              Usamos transportistas confiables.
+            </p>
+          </div>
+
+          <!-- Benefit 3: Rastrea tu pedido -->
+          <div class="benefit animate-on-scroll">
+            <svg class="benefit__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="currentColor"/>
+            </svg>
+            <h3 class="benefit__title">Rastrea tu pedido</h3>
+            <p class="benefit__desc">
+              Recibe tu guía en cuanto tu pedido sale.
+            </p>
+          </div>
+
+          <!-- Benefit 4: Pago seguro -->
+          <div class="benefit animate-on-scroll">
+            <svg class="benefit__icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1ZM12 11.99H19C18.47 16.11 15.72 19.78 12 20.93V12H5V6.3L12 3.19V11.99Z" fill="currentColor"/>
+            </svg>
+            <h3 class="benefit__title">Pago 100% Seguro</h3>
+            <p class="benefit__desc">
+              Aceptamos tarjetas, tu información está segura.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section">
+        <div class="section__head animate-on-scroll">
+          <h2 class="section__title">Preguntas Frecuentes</h2>
+          <p class="section__desc">
+            Todo lo que necesitas saber sobre nuestros art toys
+          </p>
+        </div>
+
+        <div class="faq animate-on-scroll" data-faq>
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Qué es un art toy?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              Los art toys son figuras de colección que combinan arte y diseño. No son simples juguetes: cada pieza es una obra con personalidad, historia y estilo propio.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿De qué están hechos los art toys de Glitched Box?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              Nuestros art toys están hechos principalmente de resina de alta calidad y algunos incorporan detalles pintados a mano. Cada figura está cuidada hasta el último pixel para garantizar que luzca increíble tanto en vitrina como en tu feed.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Qué métodos de pago aceptan?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              Aceptamos tarjetas de crédito, débito y pagos a través de plataformas seguras como PayPal y MercadoPago.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Hacen envíos internacionales?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              Por ahora solo realizamos envíos dentro de México. Esperamos poder llevar Glitched Box más allá muy pronto, pero por el momento estamos enfocados en crecer dentro del país.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Cuánto tarda en llegar mi pedido?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              El tiempo de entrega dentro de México es de aproximadamente 3 a 7 días hábiles. Una vez enviado, te compartiremos un número de rastreo para que sigas el camino de tu figura.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Puedo devolver o cambiar mi pedido?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              Por ahora solo realizamos envíos dentro de México. Esperamos poder llevar Glitched Box más allá muy pronto, pero por el momento estamos enfocados en crecer dentro del país.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Puedo devolver o cambiar mi pedido?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              ¡Sí! Algunas son parte de una serie limitada, otras están pintadas a mano o tienen detalles únicos. Nos gusta que cada pieza tenga ese algo especial que la haga irrepetible.
+            </p>
+          </div>
+
+          <button class="faq__item" aria-expanded="false">
+            <span class="faq__q">¿Puedo encargar un art toy personalizado?</span>
+            <span class="faq__icon">+</span>
+          </button>
+          <div class="faq__panel">
+            <p>
+              No por ahora, pero quién sabe... si un día abrimos esa opción, lo anunciaremos a lo grande.
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
-  <!-- Footer -->
   <footer class="footer">
 
     <!-- Newsletter (centrado tipo container) -->
@@ -203,6 +627,7 @@
             <input type="email" class="newsletter-input" placeholder="Escribe tu correo electrónico" required>
             <button type="submit" class="newsletter-button">Suscribirse</button>
           </form>
+          <p class="newsletter-help" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -294,6 +719,8 @@
       </svg>
     </span>
   </button>
+
 <script src="gb-core.js"></script>
+<script src="home.js" defer></script>
 </body>
 </html>
